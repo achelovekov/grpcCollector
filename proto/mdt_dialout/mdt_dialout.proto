@@ -1,0 +1,20 @@
+//protoc *.proto --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative,require_unimplemented_servers=false    --proto_path=. 
+syntax = "proto3";
+
+// Package implements gRPC Model Driven Telemetry service
+package mdt_dialout;
+
+option go_package = "./";
+
+// gRPCMdtDialout defines service used for client-side streaming pushing MdtDialoutArgs.
+service gRPCMdtDialout {
+    rpc MdtDialout(stream MdtDialoutArgs___) returns(stream MdtDialoutArgs___) {};
+}
+
+// MdtDialoutArgs is the content pushed to the server
+message MdtDialoutArgs___ {
+    int64 ReqId = 1;
+    // data carries the payload content.
+    bytes data = 2;
+    string errors = 3;
+}
