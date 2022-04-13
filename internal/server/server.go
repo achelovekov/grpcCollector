@@ -1,18 +1,16 @@
 package server
 
 import (
-	"context"
-	"log"
-	"io"
-	"fmt"
-	"time"
 	"bytes"
-	"sort"
+	"context"
+	"fmt"
+	"io"
+	"log"
+	"time"
 
 	//dialout "github.com/CiscoSE/grpc/proto/mdt_dialout"
 	dialout "github.com/achelovekov/grpcCollector/proto/mdt_dialout"
 	telemetry "github.com/achelovekov/grpcCollector/proto/telemetry"
-	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 	"google.golang.org/protobuf/proto"
 )
@@ -21,7 +19,6 @@ type DialOutServer struct {
 	cancel context.CancelFunc
 	ctx    context.Context
 }
-
 
 func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServer) error {
 
@@ -50,7 +47,7 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 	if peerOK {
 		log.Printf("Closed Cisco MDT GRPC dialout connection from %s", peer.Addr)
 	}
-	
+
 	return nil
 }
 
@@ -71,7 +68,7 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 		if measured == 0 {
 			measured = telemetryData.MsgTimestamp
 		}
-	
+
 		timestamp := time.Unix(int64(measured/1000), int64(measured%1000)*1000000)
 
 		for _, field := range gpbkv.Fields {
@@ -87,7 +84,7 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 					c.parseGPBKVField(subfield,
 						&buf,
 						telemetryData.EncodingPath,
-						timestamp, 
+						timestamp,
 						tags)
 				}
 			case "content":
@@ -97,7 +94,7 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 					c.parseGPBKVField(subfield,
 						&buf,
 						telemetryData.EncodingPath,
-						timestamp, 
+						timestamp,
 						contents)
 				}
 			}
@@ -117,83 +114,4 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 		}
 	}
 
-}
-
-
-// Recursively parse GPBKV field structure into fields or tags
-func (c *DialOutServer) parseGPBKVField(
-	field *telemetry.TelemetryField, 
-	buf *bytes.Buffer,
-	path string, 
-	timestamp time.Time, 
-	valueMap map[string]interface{}) {
-	
-	bufLen := buf.Len()
-	if bufLen > 0 {
-		buf.WriteRune('/')
-	}
-	buf.WriteString(field.Name)
-
-	var value interface{}
-	switch field.ValueByType.(type) {
-	case *telemetry.TelemetryField_BytesValue:
-		value = field.ValueByType.(*telemetry.TelemetryField_BytesValue).BytesValue
-	case *telemetry.TelemetryField_StringValue:
-		value = field.ValueByType.(*telemetry.TelemetryField_StringValue).StringValue
-	case *telemetry.TelemetryField_BoolValue:
-		value = field.ValueByType.(*telemetry.TelemetryField_BoolValue).BoolValue
-	case *telemetry.TelemetryField_Uint32Value:
-		value = field.ValueByType.(*telemetry.TelemetryField_Uint32Value).Uint32Value
-	case *telemetry.TelemetryField_Uint64Value:
-		value = field.ValueByType.(*telemetry.TelemetryField_Uint64Value).Uint64Value
-	case *telemetry.TelemetryField_Sint32Value:
-		value = field.ValueByType.(*telemetry.TelemetryField_Sint32Value).Sint32Value
-	case *telemetry.TelemetryField_Sint64Value:
-		value = field.ValueByType.(*telemetry.TelemetryField_Sint64Value).Sint64Value
-	case *telemetry.TelemetryField_DoubleValue:
-		value = field.ValueByType.(*telemetry.TelemetryField_DoubleValue).DoubleValue
-	case *telemetry.TelemetryField_FloatValue:
-		value = field.ValueByType.(*telemetry.TelemetryField_FloatValue).FloatValue
-	}
-
-	if value != nil {
-		{
-			valueMap[buf.String()] = fmt.Sprint(value)
-		}
-	}
-
-	for _, subfield := range field.Fields {
-		c.parseGPBKVField(subfield,
-			buf,
-			path,
-			timestamp, 
-			valueMap)
-	}
-
-	buf.Truncate(bufLen)
-}
-
-func NewGRPCDialOutSever() *grpc.Server{
-	c := &DialOutServer{}
-	c.ctx, c.cancel = context.WithCancel(context.Background())
-	var opts []grpc.ServerOption
-	grpcServer := grpc.NewServer(opts...)
-	dialout.RegisterGRPCMdtDialoutServer(grpcServer, c)
-
-	return grpcServer
-}
-
-func MapPrint(m map[string]interface{}) {
-
-	keys := make([]string, 0, len(m))
-
-	for k := range m {
-		keys = append(keys, k)
-	}
-
-	sort.Strings(keys)
-
-	for _, key := range keys {
-		fmt.Println("key:", key, "=>", "value:", m[key])
-	}
 }
