@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"time"
 	"bytes"
+	"sort"
 
 	//dialout "github.com/CiscoSE/grpc/proto/mdt_dialout"
 	dialout "github.com/achelovekov/grpcCollector/proto/mdt_dialout"
@@ -35,6 +36,7 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 			if err != io.EOF && c.ctx.Err() == nil {
 				fmt.Printf("E! GRPC dialout receive error: %v", err)
 			}
+			break
 		}
 
 		if len(packet.Data) == 0 && len(packet.Errors) != 0 {
@@ -75,7 +77,7 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 		for _, field := range gpbkv.Fields {
 			switch field.Name {
 			case "keys":
-				fmt.Printf("go for keys\n")
+				// fmt.Printf("go for keys\n")
 				tags = make(map[string]interface{})
 				tags["Producer"] = telemetryData.GetNodeIdStr()
 				tags["Target"] = telemetryData.GetSubscriptionIdStr()
@@ -89,7 +91,7 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 						tags)
 				}
 			case "content":
-				fmt.Printf("go for content\n")
+				// fmt.Printf("go for content\n")
 				contents = make(map[string]interface{})
 				for _, subfield := range field.Fields {
 					c.parseGPBKVField(subfield,
@@ -104,8 +106,10 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 		if len(tags) > 0 && len(contents) > 0 && len(telemetryData.EncodingPath) > 0 {
 
 			log.Printf("\n**** New Telemetry message from %v ****", tags["Producer"])
-			log.Printf("Tags: %v", tags)
-			log.Printf("Fields: %v\n", contents)
+			// log.Printf("Tags: %v", tags)
+			// log.Printf("Fields: %v\n", contents)
+			MapPrint(tags)
+			MapPrint(contents)
 			//log.Printf(telemetry.EncodingPath, fields, tags, timestamp)
 
 		} else {
@@ -177,4 +181,19 @@ func NewGRPCDialOutSever() *grpc.Server{
 	dialout.RegisterGRPCMdtDialoutServer(grpcServer, c)
 
 	return grpcServer
+}
+
+func MapPrint(m map[string]interface{}) {
+
+	keys := make([]string, 0, len(m))
+
+	for k := range m {
+		keys = append(keys, k)
+	}
+
+	sort.Strings(keys)
+
+	for _, key := range keys {
+		fmt.Println("key:", key, "=>", "value:", m[key])
+	}
 }
