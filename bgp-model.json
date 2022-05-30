@@ -1,0 +1,276 @@
+{
+    "name": "Cisco-IOS-XE-bgp-oper:bgp-state-data",
+    "nested": [
+      {
+        "name": "neighbors",
+        "nested": [
+          {
+            "name": "neighbor",
+            "nested": [
+              {
+                "name": "afi-safi",
+                "nested": null
+              },
+              {
+                "name": "vrf-name",
+                "nested": null
+              },
+              {
+                "name": "neighbor-id",
+                "nested": null
+              },
+              {
+                "name": "description",
+                "nested": null
+              },
+              {
+                "name": "bgp-version",
+                "nested": null
+              },
+              {
+                "name": "link",
+                "nested": null
+              },
+              {
+                "name": "up-time",
+                "nested": null
+              },
+              {
+                "name": "last-write",
+                "nested": null
+              },
+              {
+                "name": "last-read",
+                "nested": null
+              },
+              {
+                "name": "installed-prefixes",
+                "nested": null
+              },
+              {
+                "name": "session-state",
+                "nested": null
+              },
+              {
+                "name": "negotiated-keepalive-timers",
+                "nested": [
+                  {
+                    "name": "hold-time",
+                    "nested": null
+                  },
+                  {
+                    "name": "keepalive-interval",
+                    "nested": null
+                  }
+                ]
+              },
+              {
+                "name": "negotiated-cap",
+                "nested": null
+              },
+              {
+                "name": "bgp-neighbor-counters",
+                "nested": [
+                  {
+                    "name": "sent",
+                    "nested": [
+                      {
+                        "name": "opens",
+                        "nested": null
+                      },
+                      {
+                        "name": "updates",
+                        "nested": null
+                      },
+                      {
+                        "name": "notifications",
+                        "nested": null
+                      },
+                      {
+                        "name": "keepalives",
+                        "nested": null
+                      },
+                      {
+                        "name": "route-refreshes",
+                        "nested": null
+                      }
+                    ]
+                  },
+                  {
+                    "name": "received",
+                    "nested": [
+                      {
+                        "name": "opens",
+                        "nested": null
+                      },
+                      {
+                        "name": "updates",
+                        "nested": null
+                      },
+                      {
+                        "name": "notifications",
+                        "nested": null
+                      },
+                      {
+                        "name": "keepalives",
+                        "nested": null
+                      },
+                      {
+                        "name": "route-refreshes",
+                        "nested": null
+                      }
+                    ]
+                  },
+                  {
+                    "name": "inq-depth",
+                    "nested": null
+                  },
+                  {
+                    "name": "outq-depth",
+                    "nested": null
+                  }
+                ]
+              },
+              {
+                "name": "connection",
+                "nested": [
+                  {
+                    "name": "state",
+                    "nested": null
+                  },
+                  {
+                    "name": "mode",
+                    "nested": null
+                  },
+                  {
+                    "name": "total-established",
+                    "nested": null
+                  },
+                  {
+                    "name": "total-dropped",
+                    "nested": null
+                  },
+                  {
+                    "name": "last-reset",
+                    "nested": null
+                  },
+                  {
+                    "name": "reset-reason",
+                    "nested": null
+                  }
+                ]
+              },
+              {
+                "name": "transport",
+                "nested": [
+                  {
+                    "name": "path-mtu-discovery",
+                    "nested": null
+                  },
+                  {
+                    "name": "local-port",
+                    "nested": null
+                  },
+                  {
+                    "name": "foreign-port",
+                    "nested": null
+                  },
+                  {
+                    "name": "mss",
+                    "nested": null
+                  },
+                  {
+                    "name": "ao-keychain-name",
+                    "nested": null
+                  },
+                  {
+                    "name": "ao-key-id",
+                    "nested": null
+                  },
+                  {
+                    "name": "ao-incl-tcp-opts",
+                    "nested": null
+                  },
+                  {
+                    "name": "ao-accept-mismatch-conn",
+                    "nested": null
+                  }
+                ]
+              },
+              {
+                "name": "prefix-activity",
+                "nested": [
+                  {
+                    "name": "sent",
+                    "nested": [
+                      {
+                        "name": "current-prefixes",
+                        "nested": null
+                      },
+                      {
+                        "name": "total-prefixes",
+                        "nested": null
+                      },
+                      {
+                        "name": "implicit-withdraw",
+                        "nested": null
+                      },
+                      {
+                        "name": "explicit-withdraw",
+                        "nested": null
+                      },
+                      {
+                        "name": "bestpaths",
+                        "nested": null
+                      },
+                      {
+                        "name": "multipaths",
+                        "nested": null
+                      }
+                    ]
+                  },
+                  {
+                    "name": "received",
+                    "nested": [
+                      {
+                        "name": "current-prefixes",
+                        "nested": null
+                      },
+                      {
+                        "name": "total-prefixes",
+                        "nested": null
+                      },
+                      {
+                        "name": "implicit-withdraw",
+                        "nested": null
+                      },
+                      {
+                        "name": "explicit-withdraw",
+                        "nested": null
+                      },
+                      {
+                        "name": "bestpaths",
+                        "nested": null
+                      },
+                      {
+                        "name": "multipaths",
+                        "nested": null
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "as",
+                "nested": null
+              },
+              {
+                "name": "encaps-pref",
+                "nested": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

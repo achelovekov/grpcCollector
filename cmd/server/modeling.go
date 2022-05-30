@@ -3,9 +3,12 @@ package main
 import (
 	"fmt"
 
-	//server "github.com/achelovekov/grpcCollector/internal/server"
+	server "github.com/achelovekov/grpcCollector/internal/server"
 )
 
 func main() {
-	fmt.Println("go!")
+	model := server.ParseModel("bgp-model.json")
+	r := server.GenerateFilterFromModel(&model)
+
+	fmt.Println(r)
 }

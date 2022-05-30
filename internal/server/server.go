@@ -7,6 +7,9 @@ import (
 	"log"
 	"strings"
 	"encoding/json"
+	"os"
+	"io/ioutil"
+	"time"
 
 	//dialout "github.com/CiscoSE/grpc/proto/mdt_dialout"
 	// "encoding/json"
@@ -59,6 +62,52 @@ type Model struct {
 	Nested []*Model `json:"nested"`
 }
 
+func ParseModel(filename string) Model {
+	// Open jsonFile
+	jsonFile, err := os.Open(filename)
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		fmt.Println(err)
+		return Model{}
+	}
+	fmt.Println("Successfully Opened:", filename)
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer jsonFile.Close()
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	var model Model
+
+	// we unmarshal our byteArray which contains our
+	// jsonFile's content into 'users' which we defined above
+	json.Unmarshal(byteValue, &model)
+
+	return model
+}
+
+func GenerateFilterFromModel(model *Model) []string {
+	s := []string{}
+
+	prefix := []string{}
+
+	for _, item := range model.Nested {
+		FilterFlatten(item, &s, prefix)
+	}
+	return s
+}
+
+func FilterFlatten(model *Model, s *[]string, prefix []string) {
+	if len(model.Nested) > 0 {
+		prefix = append(prefix, model.Name)
+		for _, item := range model.Nested {
+			FilterFlatten(item, s, prefix)
+		}
+	} else {
+		prefix = append(prefix, model.Name)
+		i := strings.Join(prefix,".")
+		*s = append(*s, i)
+	}
+}
+
 func (c *DialOutServer) handleTelemetry(data []byte) {
 
 	telemetryData := &telemetry.Telemetry{}
@@ -68,17 +117,17 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 		return
 	}
 
-	model := Model{Name: telemetryData.EncodingPath}
+	//model := Model{Name: telemetryData.EncodingPath}
 
-	destructureTelemetry(telemetryData, &model)
-	//flattenTelemetry(telemetryData)
+	//destructureTelemetry(telemetryData, &model)
+	flattenTelemetry(telemetryData)
 
 	//PrintModel(&model,  0)
-	b, err := json.MarshalIndent(model, "", "  ")
-    if err != nil {
-        fmt.Println(err)
-    }
-    fmt.Print(string(b))
+	// b, err := json.MarshalIndent(model, "", "  ")
+    // if err != nil {
+    //     fmt.Println(err)
+    // }
+    // fmt.Print(string(b))
 	//b, err := json.Marshal(telemetryData)
 
 	// if err != nil {
@@ -118,14 +167,45 @@ func flatten(telemetryData *telemetry.TelemetryField, prefix []string, m map[str
 	}
 }
 
+func containsString(s []string, v string) bool {
+	for _, item := range s {
+        if item == v {
+            return true
+        }
+    }
+    return false
+}
+
+func filterTelemetry(m map[string]interface{}, filter []string) map[string]interface{} {
+	r := make(map[string]interface{})
+
+	for k, v := range m {
+		if containsString(filter, k) {
+			r[k] = v
+		}
+	}
+
+	return r
+
+}
+
 func flattenTelemetry(telemetryData *telemetry.Telemetry) {
+	model := ParseModel("bgp-model.json")
+	filter := GenerateFilterFromModel(&model)
 	var prefix []string
 	if len(telemetryData.DataGpbkv) > 0 {
 		for _, item := range telemetryData.DataGpbkv {
 			m := make(map[string]interface{})
+			start := time.Now()
 			flatten(item, prefix, m)
-			printMap(m)
-			fmt.Println("----------------------------")
+			duration := time.Since(start)
+			// Formatted string, such as "2h3m0.5s" or "4.503μs"
+			fmt.Println("flatten takes: ", duration)
+			start = time.Now()
+			result := filterTelemetry(m, filter)
+			duration = time.Since(start)
+			fmt.Println("filter takes: ", duration)
+			printMap(result)
 		}
 	}
 }
