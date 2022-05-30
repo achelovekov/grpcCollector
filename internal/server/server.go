@@ -86,6 +86,7 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 	// }
 
 	// fmt.Println(string(b))
+	//NEW ENTRY!!!
 }
 
 func printMap(m map[string]interface{}) {
