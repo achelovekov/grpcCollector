@@ -9,13 +9,16 @@ import (
 	"encoding/json"
 	"os"
 	"io/ioutil"
-	"time"
+	//"time"
+	"sort"
+	//"reflect"
 
 	//dialout "github.com/CiscoSE/grpc/proto/mdt_dialout"
 	// "encoding/json"
 
 	dialout "github.com/achelovekov/grpcCollector/proto/mdt_dialout"
 	telemetry "github.com/achelovekov/grpcCollector/proto/telemetry"
+	"github.com/influxdata/line-protocol/v2/lineprotocol"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 	"google.golang.org/protobuf/proto"
@@ -60,6 +63,12 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 type Model struct {
 	Name   string `json:"name"`
 	Nested []*Model `json:"nested"`
+	IsTag bool `json:"isTag"`
+	IsField bool `json:"isField`
+}
+
+func (model *Model) String() string {
+    return fmt.Sprintf("%v: isTag: %v isField: %v", model.Name, model.IsTag, model.IsField)
 }
 
 func ParseModel(filename string) Model {
@@ -84,27 +93,46 @@ func ParseModel(filename string) Model {
 	return model
 }
 
-func GenerateFilterFromModel(model *Model) []string {
-	s := []string{}
+func GenerateFilterFromModel(model *Model) ([]*Model, []*Model) {
+	tags := []*Model{}
+	fields := []*Model{}
 
 	prefix := []string{}
 
 	for _, item := range model.Nested {
-		FilterFlatten(item, &s, prefix)
+		FilterFlatten(item, &tags, &fields, prefix)
 	}
-	return s
+
+	sort.SliceStable(tags, func(i, j int) bool {
+		return tags[i].Name < tags[j].Name
+	  })
+
+	sort.SliceStable(fields, func(i, j int) bool {
+		return fields[i].Name < fields[j].Name
+	  })
+
+	return tags, fields
 }
 
-func FilterFlatten(model *Model, s *[]string, prefix []string) {
+func FilterFlatten(model *Model, tags *[]*Model, fields *[]*Model, prefix []string) {
 	if len(model.Nested) > 0 {
 		prefix = append(prefix, model.Name)
 		for _, item := range model.Nested {
-			FilterFlatten(item, s, prefix)
+			FilterFlatten(item, tags, fields, prefix)
 		}
 	} else {
 		prefix = append(prefix, model.Name)
-		i := strings.Join(prefix,".")
-		*s = append(*s, i)
+		name := strings.Join(prefix,".")
+		newModel := new(Model)
+		newModel.Name = name
+		if model.IsTag {
+			newModel.IsTag = model.IsTag
+			*tags = append(*tags, newModel)
+		}
+		if model.IsField {
+			newModel.IsField = model.IsField
+			*fields = append(*fields, newModel)
+		}
 	}
 }
 
@@ -176,36 +204,48 @@ func containsString(s []string, v string) bool {
     return false
 }
 
-func filterTelemetry(m map[string]interface{}, filter []string) map[string]interface{} {
-	r := make(map[string]interface{})
-
-	for k, v := range m {
-		if containsString(filter, k) {
-			r[k] = v
+func PrepareLine(measurement string, m map[string]interface{}, tags []*Model, fields []*Model, enc lineprotocol.Encoder) lineprotocol.Encoder {
+	enc.SetPrecision(lineprotocol.Microsecond)
+	enc.StartLine(measurement)
+	for _, item := range tags {
+		val, ok := m[item.Name]
+		if ok {
+			enc.AddTag(item.Name, val.(string))
 		}
 	}
 
-	return r
+	for _, item := range fields {
+		val, ok := m[item.Name]
+		if ok {
+			enc.AddField(item.Name, lineprotocol.MustNewValue(val))
+		}
+	}
 
+	fmt.Println(len(enc.Bytes()))
+	//enc.EndLine(time.Time{})
+	if err := enc.Err(); err != nil {
+		panic(fmt.Errorf("encoding error: %v", err))
+	}
+	fmt.Printf("--------->%s", enc.Bytes())
+
+	return enc
 }
 
 func flattenTelemetry(telemetryData *telemetry.Telemetry) {
 	model := ParseModel("bgp-model.json")
-	filter := GenerateFilterFromModel(&model)
+	tags, fields := GenerateFilterFromModel(&model)
+	fmt.Println(tags)
+	fmt.Println(fields)
 	var prefix []string
 	if len(telemetryData.DataGpbkv) > 0 {
 		for _, item := range telemetryData.DataGpbkv {
 			m := make(map[string]interface{})
-			start := time.Now()
+
 			flatten(item, prefix, m)
-			duration := time.Since(start)
-			// Formatted string, such as "2h3m0.5s" or "4.503μs"
-			fmt.Println("flatten takes: ", duration)
-			start = time.Now()
-			result := filterTelemetry(m, filter)
-			duration = time.Since(start)
-			fmt.Println("filter takes: ", duration)
-			printMap(result)
+			var enc lineprotocol.Encoder
+
+			PrepareLine("grpcBgpOper", m, tags, fields, enc)
+
 		}
 	}
 }

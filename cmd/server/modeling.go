@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	model := server.ParseModel("bgp-model.json")
-	r := server.GenerateFilterFromModel(&model)
+	modelInflux := server.ParseModel("bgp-model.json")
+	r := server.GenerateFilterFromModel(&modelInflux)
 
 	fmt.Println(r)
 }

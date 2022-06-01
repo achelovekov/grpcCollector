@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/CiscoSE/grpc v0.0.0-20190502175310-5c53d6365af1 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/influxdata/line-protocol/v2 v2.2.1 // indirect
 	golang.org/x/net v0.0.0-20200822124328-c89045814202 // indirect
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect
 	golang.org/x/text v0.3.0 // indirect
