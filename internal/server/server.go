@@ -145,9 +145,9 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 		return
 	}
 
-	//model := Model{Name: telemetryData.EncodingPath}
+	// model := Model{Name: telemetryData.EncodingPath}
 
-	//destructureTelemetry(telemetryData, &model)
+	// destructureTelemetry(telemetryData, &model)
 	flattenTelemetry(telemetryData)
 
 	//PrintModel(&model,  0)
@@ -186,10 +186,24 @@ func flatten(telemetryData *telemetry.TelemetryField, prefix []string, m map[str
 			fullPath := append(prefix, telemetryData.Name)
 			i := telemetryData.GetValueByType()
 			switch i.(type) {
+			case *telemetry.TelemetryField_BytesValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetBytesValue()
 			case *telemetry.TelemetryField_StringValue:
 				m[strings.Join(fullPath,".")] = telemetryData.GetStringValue()
+			case *telemetry.TelemetryField_BoolValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetBoolValue()
+			case *telemetry.TelemetryField_Uint32Value:
+				m[strings.Join(fullPath,".")] = int64(telemetryData.GetUint32Value())
 			case *telemetry.TelemetryField_Uint64Value:
 				m[strings.Join(fullPath,".")] = telemetryData.GetUint64Value()
+			case *telemetry.TelemetryField_Sint32Value:
+				m[strings.Join(fullPath,".")] = telemetryData.GetSint32Value()
+			case *telemetry.TelemetryField_Sint64Value:
+				m[strings.Join(fullPath,".")] = telemetryData.GetSint64Value()
+			case *telemetry.TelemetryField_DoubleValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetDoubleValue()
+			case *telemetry.TelemetryField_FloatValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetFloatValue()
 			}
 		}
 	}
@@ -242,6 +256,7 @@ func flattenTelemetry(telemetryData *telemetry.Telemetry) {
 			m := make(map[string]interface{})
 
 			flatten(item, prefix, m)
+			printMap(m)
 			var enc lineprotocol.Encoder
 
 			PrepareLine("grpcBgpOper", m, tags, fields, enc)
