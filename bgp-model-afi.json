@@ -1,0 +1,181 @@
+{
+  "name": "Cisco-IOS-XE-bgp-oper:bgp-state-data",
+  "nested": [
+    {
+      "name": "address-families",
+      "nested": [
+        {
+          "name": "address-family",
+          "nested": [
+            {
+              "name": "afi-safi",
+              "nested": null,
+              "isTag": true,
+              "IsField": false
+            },
+            {
+              "name": "vrf-name",
+              "nested": null,
+              "isTag": true,
+              "IsField": false
+            },
+            {
+              "name": "router-id",
+              "nested": null,
+              "isTag": true,
+              "IsField": false
+            },
+            {
+              "name": "prefixes",
+              "nested": [
+                {
+                  "name": "total-entries",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "memory-usage",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                }
+              ],
+              "isTag": false,
+              "IsField": false
+            },
+            {
+              "name": "path",
+              "nested": [
+                {
+                  "name": "total-entries",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "memory-usage",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                }
+              ],
+              "isTag": false,
+              "IsField": false
+            },
+            {
+              "name": "activities",
+              "nested": [
+                {
+                  "name": "prefixes",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "paths",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "scan-interval",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                }
+              ],
+              "isTag": false,
+              "IsField": false
+            },
+            {
+              "name": "total-memory",
+              "nested": null,
+              "isTag": false,
+              "IsField": true
+            },
+            {
+              "name": "bgp-neighbor-summary",
+              "nested": [
+                {
+                  "name": "id",
+                  "nested": null,
+                  "isTag": true,
+                  "IsField": false
+                },
+                {
+                  "name": "messages-received",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "messages-sent",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "table-version",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "input-queue",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "output-queue",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "up-time",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "state",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "prefixes-received",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "dynamically-configured",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                },
+                {
+                  "name": "as",
+                  "nested": null,
+                  "isTag": false,
+                  "IsField": true
+                }
+              ],
+              "isTag": false,
+              "IsField": false
+            }
+          ],
+          "isTag": false,
+          "IsField": false
+        }
+      ],
+      "isTag": false,
+      "IsField": false
+    }
+  ],
+  "isTag": false,
+  "IsField": false
+}

@@ -1,0 +1,120 @@
+2022/06/02 12:10:09 Starting listening on port :10000
+2022/06/02 12:10:09 Listening on port :10000
+2022/06/02 12:10:19 Accepted Cisco MDT GRPC dialout connection from 10.0.24.111:61513
+neighbors.neighbor.vrf-name : default
+neighbors.neighbor.description :
+neighbors.neighbor.last-write :
+neighbors.neighbor.prefix-activity.received.multipaths : 0
+neighbors.neighbor.afi-safi : ipv4-unicast
+neighbors.neighbor.transport.ao-keychain-name :
+neighbors.neighbor.prefix-activity.sent.explicit-withdraw : 0
+neighbors.neighbor.prefix-activity.received.bestpaths : 0
+neighbors.neighbor.connection.reset-reason : Active open failed
+neighbors.neighbor.prefix-activity.sent.total-prefixes : 0
+neighbors.neighbor.prefix-activity.received.current-prefixes : 0
+neighbors.neighbor.link : external
+neighbors.neighbor.last-read :
+neighbors.neighbor.session-state : fsm-active
+neighbors.neighbor.prefix-activity.received.total-prefixes : 0
+neighbors.neighbor.encaps-pref : encaps-pref-any
+neighbors.neighbor.prefix-activity.sent.implicit-withdraw : 0
+neighbors.neighbor.prefix-activity.sent.multipaths : 0
+neighbors.neighbor.neighbor-id : 10.0.0.0
+neighbors.neighbor.up-time :
+neighbors.neighbor.negotiated-cap :
+neighbors.neighbor.connection.mode : mode-active
+neighbors.neighbor.connection.last-reset : 14:29:12
+neighbors.neighbor.prefix-activity.sent.bestpaths : 0
+neighbors.neighbor.connection.state : closed
+neighbors.neighbor.prefix-activity.sent.current-prefixes : 0
+neighbors.neighbor.prefix-activity.received.implicit-withdraw : 0
+neighbors.neighbor.prefix-activity.received.explicit-withdraw : 0
+----------------------------
+neighbors.neighbor.last-read : 00:00:13
+neighbors.neighbor.connection.state : established
+neighbors.neighbor.connection.reset-reason : Active open failed
+neighbors.neighbor.prefix-activity.received.bestpaths : 0
+neighbors.neighbor.encaps-pref : encaps-pref-any
+neighbors.neighbor.transport.local-host : 10.0.0.3
+neighbors.neighbor.prefix-activity.received.implicit-withdraw : 0
+neighbors.neighbor.last-write : 00:00:18
+neighbors.neighbor.transport.ao-keychain-name :
+neighbors.neighbor.prefix-activity.sent.total-prefixes : 1
+neighbors.neighbor.prefix-activity.sent.bestpaths : 0
+neighbors.neighbor.prefix-activity.sent.multipaths : 0
+neighbors.neighbor.afi-safi : ipv4-unicast
+neighbors.neighbor.up-time : 06:35:24
+neighbors.neighbor.prefix-activity.sent.explicit-withdraw : 0
+neighbors.neighbor.session-state : fsm-established
+neighbors.neighbor.negotiated-cap : Stateful switchover support enabled: NO for session 1
+neighbors.neighbor.prefix-activity.sent.implicit-withdraw : 0
+neighbors.neighbor.prefix-activity.received.current-prefixes : 0
+neighbors.neighbor.prefix-activity.received.total-prefixes : 0
+neighbors.neighbor.prefix-activity.received.multipaths : 0
+neighbors.neighbor.vrf-name : default
+neighbors.neighbor.neighbor-id : 10.0.0.2
+neighbors.neighbor.transport.foreign-host : 10.0.0.2
+neighbors.neighbor.prefix-activity.received.explicit-withdraw : 0
+neighbors.neighbor.link : external
+neighbors.neighbor.connection.mode : mode-active
+neighbors.neighbor.description :
+neighbors.neighbor.connection.last-reset : 06:42:23
+neighbors.neighbor.prefix-activity.sent.current-prefixes : 1
+----------------------------
+address-families.address-family.router-id : 172.255.255.1
+address-families.address-family.route-map.memory-usage : 0
+address-families.address-family.filter-list.total-entries : 0
+address-families.address-family.activities.scan-interval : 60
+address-families.address-family.prefixes.memory-usage : 248
+address-families.address-family.route-map.total-entries : 0
+address-families.address-family.afi-safi : ipv4-unicast
+address-families.address-family.bgp-table-version : 2
+address-families.address-family.bgp-neighbor-summary.up-time : 06:35:24
+address-families.address-family.routing-table-version : 2
+address-families.address-family.path.total-entries : 1
+address-families.address-family.as-path.total-entries : 0
+address-families.address-family.bgp-neighbor-summary.messages-received : 398
+address-families.address-family.bgp-neighbor-summary.state : fsm-established
+address-families.address-family.bgp-neighbor-summary.prefixes-received : 0
+address-families.address-family.prefixes.total-entries : 1
+address-families.address-family.filter-list.memory-usage : 0
+address-families.address-family.bgp-neighbor-summary.input-queue : 0
+address-families.address-family.bgp-neighbor-summary.output-queue : 0
+address-families.address-family.path.memory-usage : 136
+address-families.address-family.activities.prefixes : 1
+address-families.address-family.activities.paths : 1
+address-families.address-family.total-memory : 672
+address-families.address-family.bgp-neighbor-summary.table-version : 2
+address-families.address-family.as-path.memory-usage : 0
+address-families.address-family.bgp-neighbor-summary.id : 10.0.0.2
+address-families.address-family.vrf-name : default
+address-families.address-family.bgp-neighbor-summary.messages-sent : 438
+----------------------------
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.aggr-address :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.route-filter : bgp-rf-all
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.as4-path :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.cluster-list :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.extended-community :
+bgp-route-vrfs.bgp-route-vrf.vrf : default
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.community :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.origin : origin-igp
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.rpki-status : rpki-not-enabled
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.mpls-out :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.sr-profile-name :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.originator-id :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-neighbor.bgp-neighbor-route-filter.nbr-fltr : bgp-nrf-post-received
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.afi-safi : vpnv6-flowspec
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.nexthop : 0.0.0.0
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.advertised-to : 6
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.as-path :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.mpls-in :
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.ext-aigp-metric : 0
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.bgp-path-entry.path-origin : external-path
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-neighbor.nbr-id : 10.0.0.2
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.bgp-route-entry.prefix : 1.0.0.0/24
+----------------------------
+bgp-route-vrfs.bgp-route-vrf.vrf : mgmt
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.afi-safi : vpnv6-flowspec
+bgp-route-vrfs.bgp-route-vrf.bgp-route-af.bgp-route-filter.route-filter : bgp-rf-all
+----------------------------
+bgp-route-rds.bgp-route-rd.rd-value : 0:0
