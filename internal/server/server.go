@@ -29,12 +29,37 @@ type DialOutServer struct {
 	ctx    context.Context
 }
 
+type Filter struct {
+	Tags []*Model
+	Fields []*Model
+}
+
+func FiltersGenerate(models []string) []Filter {
+
+	f := []Filter{}
+
+	for _, model := range models {
+		model := ParseModel(model)
+		filter := GenerateFilterFromModel(&model)
+		f = append(f, filter)
+	}
+
+	return f
+}
+
 func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServer) error {
 
 	peer, peerOK := peer.FromContext(stream.Context())
 	if peerOK {
 		log.Printf("Accepted Cisco MDT GRPC dialout connection from %s", peer.Addr)
 	}
+
+
+	models := []string{}
+	models = append(models, "bgp-model-afi.json")
+	models = append(models, "bgp-model-neighbors.json")
+
+	filters := FiltersGenerate(models)
 
 	for {
 		packet, err := stream.Recv()
@@ -50,7 +75,7 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 			break
 		}
 
-		c.handleTelemetry(packet.Data)
+		c.handleTelemetry(packet.Data, filters)
 	}
 
 	if peerOK {
@@ -93,7 +118,7 @@ func ParseModel(filename string) Model {
 	return model
 }
 
-func GenerateFilterFromModel(model *Model) ([]*Model, []*Model) {
+func GenerateFilterFromModel(model *Model) (Filter) {
 	tags := []*Model{}
 	fields := []*Model{}
 
@@ -111,7 +136,11 @@ func GenerateFilterFromModel(model *Model) ([]*Model, []*Model) {
 		return fields[i].Name < fields[j].Name
 	  })
 
-	return tags, fields
+	var filter Filter
+	filter.Tags = tags
+	filter.Fields = fields
+
+	return filter
 }
 
 func FilterFlatten(model *Model, tags *[]*Model, fields *[]*Model, prefix []string) {
@@ -136,7 +165,7 @@ func FilterFlatten(model *Model, tags *[]*Model, fields *[]*Model, prefix []stri
 	}
 }
 
-func (c *DialOutServer) handleTelemetry(data []byte) {
+func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, ) {
 
 	telemetryData := &telemetry.Telemetry{}
 	err := proto.Unmarshal(data, telemetryData)
@@ -148,7 +177,14 @@ func (c *DialOutServer) handleTelemetry(data []byte) {
 	// model := Model{Name: telemetryData.EncodingPath}
 
 	// destructureTelemetry(telemetryData, &model)
-	flattenTelemetry(telemetryData)
+
+	buf := []lineprotocol.Encoder{}
+
+	flattenTelemetry(telemetryData, filters, &buf)
+
+	for _, item := range buf {
+		print(item.Bytes())
+	}
 
 	//PrintModel(&model,  0)
 	// b, err := json.MarshalIndent(model, "", "  ")
@@ -218,17 +254,17 @@ func containsString(s []string, v string) bool {
     return false
 }
 
-func PrepareLine(measurement string, m map[string]interface{}, tags []*Model, fields []*Model, enc lineprotocol.Encoder) lineprotocol.Encoder {
+func PrepareLine(measurement string, m map[string]interface{}, filter Filter, enc lineprotocol.Encoder) lineprotocol.Encoder {
 	enc.SetPrecision(lineprotocol.Microsecond)
 	enc.StartLine(measurement)
-	for _, item := range tags {
+	for _, item := range filter.Tags {
 		val, ok := m[item.Name]
 		if ok {
 			enc.AddTag(item.Name, val.(string))
 		}
 	}
 
-	for _, item := range fields {
+	for _, item := range filter.Fields {
 		val, ok := m[item.Name]
 		if ok {
 			enc.AddField(item.Name, lineprotocol.MustNewValue(val))
@@ -245,11 +281,7 @@ func PrepareLine(measurement string, m map[string]interface{}, tags []*Model, fi
 	return enc
 }
 
-func flattenTelemetry(telemetryData *telemetry.Telemetry) {
-	model := ParseModel("bgp-model.json")
-	tags, fields := GenerateFilterFromModel(&model)
-	fmt.Println(tags)
-	fmt.Println(fields)
+func flattenTelemetry(telemetryData *telemetry.Telemetry, filters []Filter, buf *[]lineprotocol.Encoder) {
 	var prefix []string
 	if len(telemetryData.DataGpbkv) > 0 {
 		for _, item := range telemetryData.DataGpbkv {
@@ -258,9 +290,9 @@ func flattenTelemetry(telemetryData *telemetry.Telemetry) {
 			flatten(item, prefix, m)
 			printMap(m)
 			var enc lineprotocol.Encoder
-
-			PrepareLine("grpcBgpOper", m, tags, fields, enc)
-
+			for _, filter := range filters {
+				*buf = append(*buf, PrepareLine("grpcBgpOper", m, filter, enc))
+			}
 		}
 	}
 }
