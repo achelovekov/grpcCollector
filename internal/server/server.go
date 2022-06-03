@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 	"os"
 	"io/ioutil"
-	//"time"
+	"time"
 	"sort"
 	//"reflect"
 
@@ -18,6 +18,8 @@ import (
 
 	dialout "github.com/achelovekov/grpcCollector/proto/mdt_dialout"
 	telemetry "github.com/achelovekov/grpcCollector/proto/telemetry"
+	"github.com/influxdata/influxdb-client-go/v2"
+	"github.com/influxdata/influxdb-client-go/v2/api"
 	"github.com/influxdata/line-protocol/v2/lineprotocol"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
@@ -47,6 +49,22 @@ func FiltersGenerate(models []string) []Filter {
 	return f
 }
 
+func Sender(buf *[]lineprotocol.Encoder, writeAPI api.WriteAPI) {
+	for {
+		timer := time.NewTimer(2 * time.Second)
+		<-timer.C
+		fmt.Println("passed 2 seconds")
+		if len(*buf) > 0 {
+			for _, item := range *buf {
+				writeAPI.WriteRecord(string(item.Bytes()))
+				// fmt.Printf("%s", item.Bytes())
+				// fmt.Println()
+			}
+		}
+		*buf = nil
+	}
+}
+
 func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServer) error {
 
 	peer, peerOK := peer.FromContext(stream.Context())
@@ -60,6 +78,15 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 	models = append(models, "bgp-model-neighbors.json")
 
 	filters := FiltersGenerate(models)
+	buf := []lineprotocol.Encoder{}
+
+	// Create a new client using an InfluxDB server base URL and an authentication token
+	client := influxdb2.NewClient("http://10.0.17.11:8086", "Ubm4lS0Smd8aGYVI5LlwwAJJVX6BbKDdS4GLU1nVwyR2Ku2_JMsEs4hW8mwmy-TH2L3a8vhVgashOZk5azkqsw==")
+	// Use blocking write client for writes to desired bucket
+	writeAPI := client.WriteAPI("Neto", "grpcBucket")
+
+
+	go Sender(&buf, writeAPI)
 
 	for {
 		packet, err := stream.Recv()
@@ -75,7 +102,7 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 			break
 		}
 
-		c.handleTelemetry(packet.Data, filters)
+		c.handleTelemetry(packet.Data, filters, &buf)
 	}
 
 	if peerOK {
@@ -165,7 +192,7 @@ func FilterFlatten(model *Model, tags *[]*Model, fields *[]*Model, prefix []stri
 	}
 }
 
-func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, ) {
+func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, buf *[]lineprotocol.Encoder) {
 
 	telemetryData := &telemetry.Telemetry{}
 	err := proto.Unmarshal(data, telemetryData)
@@ -178,13 +205,7 @@ func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, ) {
 
 	// destructureTelemetry(telemetryData, &model)
 
-	buf := []lineprotocol.Encoder{}
-
-	flattenTelemetry(telemetryData, filters, &buf)
-
-	for _, item := range buf {
-		print(item.Bytes())
-	}
+	flattenTelemetry(telemetryData, filters, buf)
 
 	//PrintModel(&model,  0)
 	// b, err := json.MarshalIndent(model, "", "  ")
@@ -276,13 +297,14 @@ func PrepareLine(measurement string, m map[string]interface{}, filter Filter, en
 	if err := enc.Err(); err != nil {
 		panic(fmt.Errorf("encoding error: %v", err))
 	}
-	fmt.Printf("--------->%s", enc.Bytes())
+	//fmt.Printf("--------->%s", enc.Bytes())
 
 	return enc
 }
 
 func flattenTelemetry(telemetryData *telemetry.Telemetry, filters []Filter, buf *[]lineprotocol.Encoder) {
 	var prefix []string
+	measurement := "grpcBgpOper"
 	if len(telemetryData.DataGpbkv) > 0 {
 		for _, item := range telemetryData.DataGpbkv {
 			m := make(map[string]interface{})
@@ -291,7 +313,10 @@ func flattenTelemetry(telemetryData *telemetry.Telemetry, filters []Filter, buf 
 			printMap(m)
 			var enc lineprotocol.Encoder
 			for _, filter := range filters {
-				*buf = append(*buf, PrepareLine("grpcBgpOper", m, filter, enc))
+				line := PrepareLine(measurement, m, filter, enc)
+				if len(line.Bytes()) > len(measurement) {
+					*buf = append(*buf, PrepareLine("grpcBgpOper", m, filter, enc))
+				}
 			}
 		}
 	}
