@@ -378,46 +378,6 @@ func destructureFields(fields []*telemetry.TelemetryField, model *Model) {
 
 }
 
-// func destructureFields(fields []*telemetry.TelemetryField, model *Model) {
-// 	for _, field := range fields {
-// 		if (field.Name == "keys" && len(field.Fields) > 0) {
-// 			for _, field := range field.Fields {
-// 				fmt.Println("key field: ", field.Name)
-// 				newModel := &Model{Name: field.Name}
-// 				if !contains(model.Nested, newModel) {
-// 					model.Nested = append(model.Nested, newModel)
-// 				}
-// 			}
-// 		}
-// 		if field.Name == "content" {
-// 			for _, field := range field.Fields {
-// 				fmt.Println("content field: ", field.Name)
-// 				newModel := &Model{Name: field.Name}
-// 				if !contains(model.Nested, newModel) {
-// 					model.Nested = append(model.Nested, newModel)
-// 				}
-// 				if len(field.Fields) > 0 {
-// 					fmt.Println("go deep with: ", field.Name)
-// 					destructureFields(field.Fields, newModel)
-// 				}
-// 			}
-// 		} else if (field.Name != "keys" && field.Name != "content") {
-// 			fmt.Println("nested field: ", field.Name)
-// 			newModel := &Model{Name: field.Name}
-// 			if contains(model.Nested, newModel) {
-// 				fmt.Println("contains:", newModel.Name)
-// 			}
-// 			if !contains(model.Nested, newModel) {
-// 				model.Nested = append(model.Nested, newModel)
-// 			}
-// 			if len(field.Fields) > 0 {
-// 				fmt.Println("go deep with: ", field.Name)
-// 				destructureFields(field.Fields, newModel)
-// 			}
-// 		}
-// 	}
-// }
-
 func PrintModel(model *Model, tab int) {
 	fmt.Println(strings.Repeat(" ", tab) + model.Name)
 	if len(model.Nested) > 0 {
