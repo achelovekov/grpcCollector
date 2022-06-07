@@ -1,0 +1,488 @@
+{
+  "name": "Cisco-IOS-XE-bgp-oper:bgp-state-data",
+  "nested": [
+    {
+      "name": "neighbors",
+      "nested": [
+        {
+          "name": "neighbor",
+          "nested": [
+            {
+              "name": "afi-safi",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "vrf-name",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "neighbor-id",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "description",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "bgp-version",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "link",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "up-time",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "last-write",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "last-read",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "installed-prefixes",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "session-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "negotiated-keepalive-timers",
+              "nested": [
+                {
+                  "name": "hold-time",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "keepalive-interval",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                }
+              ],
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "negotiated-cap",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": true
+            },
+            {
+              "name": "bgp-neighbor-counters",
+              "nested": [
+                {
+                  "name": "sent",
+                  "nested": [
+                    {
+                      "name": "opens",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "updates",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "notifications",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "keepalives",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "route-refreshes",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    }
+                  ],
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "received",
+                  "nested": [
+                    {
+                      "name": "opens",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "updates",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "notifications",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "keepalives",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "route-refreshes",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    }
+                  ],
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "inq-depth",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "outq-depth",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                }
+              ],
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "connection",
+              "nested": [
+                {
+                  "name": "state",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "mode",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "total-established",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "total-dropped",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "last-reset",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "reset-reason",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                }
+              ],
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "transport",
+              "nested": [
+                {
+                  "name": "path-mtu-discovery",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "local-port",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "local-host",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "foreign-port",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "foreign-host",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "mss",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "ao-keychain-name",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "ao-key-id",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "ao-incl-tcp-opts",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "ao-accept-mismatch-conn",
+                  "nested": null,
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                }
+              ],
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "prefix-activity",
+              "nested": [
+                {
+                  "name": "sent",
+                  "nested": [
+                    {
+                      "name": "current-prefixes",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "total-prefixes",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "implicit-withdraw",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "explicit-withdraw",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "bestpaths",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "multipaths",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    }
+                  ],
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                },
+                {
+                  "name": "received",
+                  "nested": [
+                    {
+                      "name": "current-prefixes",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "total-prefixes",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "implicit-withdraw",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "explicit-withdraw",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "bestpaths",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    },
+                    {
+                      "name": "multipaths",
+                      "nested": null,
+                      "isTag": false,
+                      "isField": false,
+                      "isList": false
+                    }
+                  ],
+                  "isTag": false,
+                  "isField": false,
+                  "isList": false
+                }
+              ],
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "as",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            },
+            {
+              "name": "encaps-pref",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    }
+  ],
+  "isTag": false,
+  "isField": false,
+  "isList": false
+}
