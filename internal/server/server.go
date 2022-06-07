@@ -363,6 +363,9 @@ func destructureFields(fields []*telemetry.TelemetryField, model *Model) {
 		} else if (field.Name != "keys" && field.Name != "content") {
 			fmt.Println("nested field: ", field.Name)
 			newModel := &Model{Name: field.Name}
+			if contains(model.Nested, newModel) {
+				fmt.Println("contains:", newModel.Name)
+			}
 			if !contains(model.Nested, newModel) {
 				model.Nested = append(model.Nested, newModel)
 			}
