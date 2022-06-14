@@ -133,6 +133,29 @@ func (model *Model) GetNestedByName(name string) *Model {
     return &Model{}
 }
 
+func (model *Model) GetName() string {
+	if model != nil {
+		return model.Name
+	}
+	return ""
+}
+
+func (model *Model) GetNested() []*Model {
+	if model != nil {
+		return model.Nested
+	}
+	return []*Model{}
+}
+
+func (model *Model) CheckNestedByName(s string) bool {
+	for _, item := range model.Nested {
+		if item.Name == s {
+			return true
+		}
+	}
+	return false
+}
+
 func ParseModel(filename string) Model {
 	// Open jsonFile
 	jsonFile, err := os.Open(filename)
@@ -215,7 +238,9 @@ func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, buf *[]li
 
 	destructureTelemetry(telemetryData, &model)
 
-	//flattenTelemetry(telemetryData, filters, buf)
+	// model := ParseModel("bgp-neighbors.model")
+
+	// bar(telemetryData, &model)
 
 	//PrintModel(&model,  0)
 	b, err := json.MarshalIndent(model, "", "  ")
@@ -223,13 +248,13 @@ func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, buf *[]li
         fmt.Println(err)
     }
     fmt.Print(string(b))
-	b, err = json.Marshal(telemetryData)
+	// b, err = json.Marshal(telemetryData)
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
 
-	fmt.Println(string(b))
+	// fmt.Println(string(b))
 	//NEW ENTRY!!!
 }
 
@@ -239,42 +264,42 @@ func printMap(m map[string]interface{}) {
     }
 }
 
-func flatten(telemetryData *telemetry.TelemetryField, prefix []string, m map[string]interface{}) {
-	if len(telemetryData.Fields) > 0 {
-		if (len(telemetryData.Name) > 0 && telemetryData.Name != "keys" && telemetryData.Name != "content") {
-			prefix = append(prefix, telemetryData.Name)
-		}
+// func flatten(telemetryData *telemetry.TelemetryField, prefix []string, m map[string]interface{}) {
+// 	if len(telemetryData.Fields) > 0 {
+// 		if (len(telemetryData.Name) > 0 && telemetryData.Name != "keys" && telemetryData.Name != "content") {
+// 			prefix = append(prefix, telemetryData.Name)
+// 		}
 
-		for _, item := range telemetryData.Fields {
-			flatten(item, prefix, m)
-		}
-	} else {
-		if (len(telemetryData.Name) > 0 && telemetryData.Name != "keys" && telemetryData.Name != "content") {
-			fullPath := append(prefix, telemetryData.Name)
-			i := telemetryData.GetValueByType()
-			switch i.(type) {
-			case *telemetry.TelemetryField_BytesValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetBytesValue()
-			case *telemetry.TelemetryField_StringValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetStringValue()
-			case *telemetry.TelemetryField_BoolValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetBoolValue()
-			case *telemetry.TelemetryField_Uint32Value:
-				m[strings.Join(fullPath,".")] = int64(telemetryData.GetUint32Value())
-			case *telemetry.TelemetryField_Uint64Value:
-				m[strings.Join(fullPath,".")] = telemetryData.GetUint64Value()
-			case *telemetry.TelemetryField_Sint32Value:
-				m[strings.Join(fullPath,".")] = telemetryData.GetSint32Value()
-			case *telemetry.TelemetryField_Sint64Value:
-				m[strings.Join(fullPath,".")] = telemetryData.GetSint64Value()
-			case *telemetry.TelemetryField_DoubleValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetDoubleValue()
-			case *telemetry.TelemetryField_FloatValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetFloatValue()
-			}
-		}
-	}
-}
+// 		for _, item := range telemetryData.Fields {
+// 			flatten(item, prefix, m)
+// 		}
+// 	} else {
+// 		if (len(telemetryData.Name) > 0 && telemetryData.Name != "keys" && telemetryData.Name != "content") {
+// 			fullPath := append(prefix, telemetryData.Name)
+// 			i := telemetryData.GetValueByType()
+// 			switch i.(type) {
+// 			case *telemetry.TelemetryField_BytesValue:
+// 				m[strings.Join(fullPath,".")] = telemetryData.GetBytesValue()
+// 			case *telemetry.TelemetryField_StringValue:
+// 				m[strings.Join(fullPath,".")] = telemetryData.GetStringValue()
+// 			case *telemetry.TelemetryField_BoolValue:
+// 				m[strings.Join(fullPath,".")] = telemetryData.GetBoolValue()
+// 			case *telemetry.TelemetryField_Uint32Value:
+// 				m[strings.Join(fullPath,".")] = int64(telemetryData.GetUint32Value())
+// 			case *telemetry.TelemetryField_Uint64Value:
+// 				m[strings.Join(fullPath,".")] = telemetryData.GetUint64Value()
+// 			case *telemetry.TelemetryField_Sint32Value:
+// 				m[strings.Join(fullPath,".")] = telemetryData.GetSint32Value()
+// 			case *telemetry.TelemetryField_Sint64Value:
+// 				m[strings.Join(fullPath,".")] = telemetryData.GetSint64Value()
+// 			case *telemetry.TelemetryField_DoubleValue:
+// 				m[strings.Join(fullPath,".")] = telemetryData.GetDoubleValue()
+// 			case *telemetry.TelemetryField_FloatValue:
+// 				m[strings.Join(fullPath,".")] = telemetryData.GetFloatValue()
+// 			}
+// 		}
+// 	}
+// }
 
 func containsString(s []string, v string) bool {
 	for _, item := range s {
@@ -312,24 +337,88 @@ func PrepareLine(measurement string, m map[string]interface{}, filter Filter, en
 	return enc
 }
 
-func flattenTelemetry(telemetryData *telemetry.Telemetry, filters []Filter, buf *[]lineprotocol.Encoder) {
-	var prefix []string
-	measurement := "grpcBgpOper"
-	if len(telemetryData.DataGpbkv) > 0 {
-		for _, item := range telemetryData.DataGpbkv {
-			m := make(map[string]interface{})
-
-			flatten(item, prefix, m)
-			printMap(m)
-			var enc lineprotocol.Encoder
-			for _, filter := range filters {
-				line := PrepareLine(measurement, m, filter, enc)
-				if len(line.Bytes()) > len(measurement) {
-					*buf = append(*buf, PrepareLine("grpcBgpOper", m, filter, enc))
+func getFieldsContent(fields []*telemetry.TelemetryField, _name string) []*telemetry.TelemetryField{
+	for _, item := range fields {
+		if len(item.GetName()) == 0 {
+			for _, item := range item.GetFields() {
+				fmt.Println("1: ", item.GetName())
+				if name := item.GetName(); name == "keys" || name == "content" {
+					for _, item := range item.GetFields() {
+						fmt.Println("2: ", item.GetName(), _name)
+						if item.GetName() == _name {
+							return item.GetFields()
+						}
+					}
 				}
+			}
+		} else {
+			if item.GetName() == _name {
+				return item.GetFields()
 			}
 		}
 	}
+	return []*telemetry.TelemetryField{}
+}
+
+func GetValueByName(fields []*telemetry.TelemetryField, name string) *telemetry.TelemetryField {
+	for _, item := range fields {
+		if item.GetName() == name {
+			return item
+		}
+	}
+	return &telemetry.TelemetryField{}
+}
+
+func foo(model *Model, fields []*telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
+	if len(model.GetNested()) == 0 {
+		fmt.Println("non-nested: ", model.Name)
+		switch model.IsList {
+		case false:
+			telemetryData := GetValueByName(fields, model.Name)
+			i := telemetryData.GetValueByType()
+			fullPath := append(prefix, telemetryData.Name)
+			switch i.(type) {
+			case *telemetry.TelemetryField_BytesValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetBytesValue()
+			case *telemetry.TelemetryField_StringValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetStringValue()
+			case *telemetry.TelemetryField_BoolValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetBoolValue()
+			case *telemetry.TelemetryField_Uint32Value:
+				m[strings.Join(fullPath,".")] = int64(telemetryData.GetUint32Value())
+			case *telemetry.TelemetryField_Uint64Value:
+				m[strings.Join(fullPath,".")] = telemetryData.GetUint64Value()
+			case *telemetry.TelemetryField_Sint32Value:
+				m[strings.Join(fullPath,".")] = telemetryData.GetSint32Value()
+			case *telemetry.TelemetryField_Sint64Value:
+				m[strings.Join(fullPath,".")] = telemetryData.GetSint64Value()
+			case *telemetry.TelemetryField_DoubleValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetDoubleValue()
+			case *telemetry.TelemetryField_FloatValue:
+				m[strings.Join(fullPath,".")] = telemetryData.GetFloatValue()
+			}
+		case true:
+			{}
+		}
+
+	} else {
+		fmt.Println("with-nested: ", model.Name)
+		prefix = append(prefix, model.Name)
+		fields = getFieldsContent(fields, model.GetName())
+		// for _, field := range fields {
+		// 	fmt.Println("field:", field.GetName())
+		// }
+		for _, item := range model.GetNested() {
+			foo(item, fields, m, prefix)
+	}
+	}
+}
+
+func bar(telemetryData *telemetry.Telemetry, model *Model) {
+	m := make(map[string]interface{})
+	prefix := []string{}
+	foo(model.GetNested()[0], telemetryData.GetDataGpbkv(), m, prefix)
+	printMap(m)
 }
 
 func contains(sli []*Model, elem *Model) bool {
@@ -360,15 +449,13 @@ func destructureFields(fields []*telemetry.TelemetryField, model *Model) {
 				destructureFields(item.GetFields(), model)
 			default:
 				newModel := &Model{Name: item.GetName()}
-				if len(item.GetFields()) > 0 {
-					model.Nested = append(model.Nested, newModel)
-					destructureFields(item.GetFields(), newModel)
+				if exist := model.GetNestedByName(item.GetName()); len(exist.Name) > 0 {
+					exist.IsList = true
 				} else {
-					if exist := model.GetNestedByName(item.GetName()); len(exist.Name) > 0 {
-						exist.IsList = true
-					} else {
-						model.Nested = append(model.Nested, newModel)
-					}
+					model.Nested = append(model.Nested, newModel)
+				}
+				if len(item.GetFields()) > 0 {
+					destructureFields(item.GetFields(), newModel)
 				}
 			}
 		}

@@ -1,0 +1,3165 @@
+{
+  "name": "Cisco-IOS-XE-interfaces-oper:interfaces/interface",
+  "nested": [
+    {
+      "name": "name",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "interface-type",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "admin-status",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "oper-status",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "last-change",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "if-index",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "phys-address",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "speed",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "statistics",
+      "nested": [
+        {
+          "name": "discontinuity-time",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "num-flaps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-crc-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "vrf",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "ipv4",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "ipv4-subnet-mask",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "description",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "mtu",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "input-security-acl",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "output-security-acl",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "v4-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v6-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "bia-address",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "ipv4-tcp-adjust-mss",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "ipv6-tcp-adjust-mss",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "storm-control",
+      "nested": [
+        {
+          "name": "broadcast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "multicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unknown-unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "ether-state",
+      "nested": [
+        {
+          "name": "negotiated-duplex-mode",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "negotiated-port-speed",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "auto-negotiate",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "enable-flow-control",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "media-type",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "ether-stats",
+      "nested": [
+        {
+          "name": "in-mac-control-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-mac-pause-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-oversize-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-jabber-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-fragment-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-8021q-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-mac-control-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-mac-pause-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-8021q-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "statistics",
+      "nested": [
+        {
+          "name": "discontinuity-time",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "num-flaps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-crc-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v4-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v6-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "storm-control",
+      "nested": [
+        {
+          "name": "broadcast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "multicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unknown-unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "ether-state",
+      "nested": [
+        {
+          "name": "negotiated-duplex-mode",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "negotiated-port-speed",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "auto-negotiate",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "enable-flow-control",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "media-type",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "ether-stats",
+      "nested": [
+        {
+          "name": "in-mac-control-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-mac-pause-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-oversize-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-jabber-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-fragment-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-8021q-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-mac-control-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-mac-pause-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-8021q-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "statistics",
+      "nested": [
+        {
+          "name": "discontinuity-time",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "num-flaps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-crc-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v4-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v6-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "storm-control",
+      "nested": [
+        {
+          "name": "broadcast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "multicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unknown-unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "ether-state",
+      "nested": [
+        {
+          "name": "negotiated-duplex-mode",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "negotiated-port-speed",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "auto-negotiate",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "enable-flow-control",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "media-type",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "ether-stats",
+      "nested": [
+        {
+          "name": "in-mac-control-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-mac-pause-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-oversize-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-jabber-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-fragment-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-8021q-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-mac-control-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-mac-pause-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-8021q-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "statistics",
+      "nested": [
+        {
+          "name": "discontinuity-time",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "num-flaps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-crc-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v4-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v6-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "storm-control",
+      "nested": [
+        {
+          "name": "broadcast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "multicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unknown-unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "ether-state",
+      "nested": [
+        {
+          "name": "negotiated-duplex-mode",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "negotiated-port-speed",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "auto-negotiate",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "enable-flow-control",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "media-type",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "ether-stats",
+      "nested": [
+        {
+          "name": "in-mac-control-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-mac-pause-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-oversize-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-jabber-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-fragment-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-8021q-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-mac-control-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-mac-pause-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-8021q-frames",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "statistics",
+      "nested": [
+        {
+          "name": "discontinuity-time",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "num-flaps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-crc-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v4-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v6-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "storm-control",
+      "nested": [
+        {
+          "name": "broadcast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "multicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unknown-unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "intf-class-unspecified",
+      "nested": null,
+      "isTag": false,
+      "isField": false,
+      "isList": true
+    },
+    {
+      "name": "statistics",
+      "nested": [
+        {
+          "name": "discontinuity-time",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-unicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-broadcast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-multicast-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discards",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "rx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-pps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "tx-kbps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "num-flaps",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-crc-errors",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discards-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-errors-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-unknown-protos-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets-64",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v4-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "v6-protocol-stats",
+      "nested": [
+        {
+          "name": "in-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "in-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-error-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-forwarded-octets",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "out-discarded-pkts",
+          "nested": null,
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    },
+    {
+      "name": "storm-control",
+      "nested": [
+        {
+          "name": "broadcast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "multicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        },
+        {
+          "name": "unknown-unicast",
+          "nested": [
+            {
+              "name": "filter-state",
+              "nested": null,
+              "isTag": false,
+              "isField": false,
+              "isList": false
+            }
+          ],
+          "isTag": false,
+          "isField": false,
+          "isList": false
+        }
+      ],
+      "isTag": false,
+      "isField": false,
+      "isList": false
+    }
+  ],
+  "isTag": false,
+  "isField": false,
+  "isList": false
+}
