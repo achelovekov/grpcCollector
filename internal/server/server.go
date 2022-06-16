@@ -234,20 +234,20 @@ func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, buf *[]li
 		return
 	}
 
-	model := Model{Name: telemetryData.EncodingPath}
+	// model := Model{Name: telemetryData.EncodingPath}
 
-	destructureTelemetry(telemetryData, &model)
+	// destructureTelemetry(telemetryData, &model)
 
-	// model := ParseModel("bgp-neighbors.model")
+	model := ParseModel("bgp-model-afi.json")
 
-	// bar(telemetryData, &model)
+	bar(&model, telemetryData)
 
 	//PrintModel(&model,  0)
-	b, err := json.MarshalIndent(model, "", "  ")
-    if err != nil {
-        fmt.Println(err)
-    }
-    fmt.Print(string(b))
+	// b, err := json.MarshalIndent(model, "", "  ")
+    // if err != nil {
+    //     fmt.Println(err)
+    // }
+    // fmt.Print(string(b))
 	// b, err = json.Marshal(telemetryData)
 
 	// if err != nil {
@@ -347,16 +347,103 @@ func contains(sli []*Model, elem *Model) bool {
 }
 
 type TFContent struct {
-	Content *telemetry.Telemetry
+	Content *telemetry.TelemetryField
 	Contents []*telemetry.TelemetryField
 }
 
-func GetContent(model *Model, tf *telemetry.TelemetryField) TFContent {
+func GetContent(model *Model, tf *telemetry.TelemetryField) *TFContent {
+	var content *telemetry.TelemetryField
+	var contents []*telemetry.TelemetryField
+
+	result := []*telemetry.TelemetryField{}
+	modelName := model.GetName()
+
+	if len(tf.GetName()) == 0  && len(tf.GetFields()) > 0 {
+		for _, tf := range tf.GetFields() {
+			if name := tf.GetName(); name == "keys" || name == "content" {
+				for _, tf := range tf.GetFields() {
+					if tf.GetName() == modelName {
+						result = append(result, tf)
+					}
+				}
+			}
+		}
+	}
+	if len(tf.GetName()) > 0 && len(tf.GetFields()) > 0 {
+		for _, tf := range tf.GetFields() {
+			if tf.GetName() == modelName {
+				result = append(result, tf)
+			}
+		}
+	}
+
+	if len(result) == 1 {
+		content = result[0]
+	}
+
+	if len(result) > 1 {
+		contents = result
+	}
+
+	tFContent := TFContent{Content: content, Contents: contents}
+
+	return &tFContent
+}
+
+type Keys struct {
+	Leafs []*Model
+	Nesteds []*Model
+	WLists []*Model
+}
+
+func (keys *Keys) String() string {
+    return fmt.Sprintf("Leafs: %v Nesteds: %v WLists: %v", keys.Leafs, keys.Nesteds, keys.WLists)
+}
+
+func FindKeys(model *Model) Keys {
+	var leafs []*Model
+	var nesteds []*Model
+	var wLists []*Model
+
+	nested := model.GetNested()
+
+	if len(nested) > 0 {
+		for _, model := range nested {
+			if len(model.GetNested()) > 0 {
+				nesteds = append(nesteds, model)
+			}
+			if len(model.GetNested()) == 0 && !model.IsList {
+				leafs = append(leafs, model)
+			}
+			if model.IsList {
+				wLists = append(wLists, model)
+			}
+		}
+	}
+
+	return Keys{Leafs: leafs, Nesteds: nesteds, WLists: wLists}
+}
+
+func UpdateMap(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
+	tFContent := GetContent(model, tf)
+
+
 
 }
 
-func foo(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
+func foo(model *Model, tf *telemetry.TelemetryField) {
+	//tFContent := GetContent(model, tf)
 
+	keys := FindKeys(model)
+
+	fmt.Println(keys)
+
+}
+
+func bar(model *Model, td *telemetry.Telemetry) {
+	for _, tf := range td.GetDataGpbkv() {
+		foo(model, tf)
+	}
 }
 
 func destructureTelemetry(telemetry *telemetry.Telemetry, model *Model) {
