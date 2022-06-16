@@ -457,21 +457,21 @@ func UpdateMap(model *Model, tf *telemetry.TelemetryField, m map[string]interfac
 func foo(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
 	tf = GetContent(model, tf)
 
-	fmt.Println("1: ", tf)
+	//fmt.Println("1: ", tf)
 
 	keys := FindKeys(model)
 
-	fmt.Println("2: ", keys)
+	//fmt.Println("2: ", keys)
 
 	for _, leaf := range keys.Leafs {
-		fmt.Println("3: ", leaf)
+		//fmt.Println("3: ", leaf)
 		UpdateMap(leaf, tf, m, prefix)
 	}
 
 	if len(keys.Nesteds) > 0 {
 		prefix := append(prefix, model.GetName())
 		for _, nested := range keys.Nesteds {
-			fmt.Println("4: ", nested)
+			//fmt.Println("4: ", nested)
 			m := CopyMap(m)
 
 			var newPrefix []string
@@ -491,6 +491,9 @@ func foo(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, p
 				m := CopyMap(m)
 				var newPrefix []string
 				newPrefix = append(newPrefix, prefix...)
+				if len(wList.GetNested()) > 0 {
+					newPrefix = append(newPrefix, wList.GetName())
+				}
 				foo(wList, content, m, newPrefix)
 			}
 		}
