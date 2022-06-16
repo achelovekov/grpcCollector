@@ -337,90 +337,6 @@ func PrepareLine(measurement string, m map[string]interface{}, filter Filter, en
 	return enc
 }
 
-func getFieldsContent(fields []*telemetry.TelemetryField, _name string) []*telemetry.TelemetryField{
-	for _, item := range fields {
-		if len(item.GetName()) == 0 {
-			for _, item := range item.GetFields() {
-				fmt.Println("1: ", item.GetName())
-				if name := item.GetName(); name == "keys" || name == "content" {
-					for _, item := range item.GetFields() {
-						fmt.Println("2: ", item.GetName(), _name)
-						if item.GetName() == _name {
-							return item.GetFields()
-						}
-					}
-				}
-			}
-		} else {
-			if item.GetName() == _name {
-				return item.GetFields()
-			}
-		}
-	}
-	return []*telemetry.TelemetryField{}
-}
-
-func GetValueByName(fields []*telemetry.TelemetryField, name string) *telemetry.TelemetryField {
-	for _, item := range fields {
-		if item.GetName() == name {
-			return item
-		}
-	}
-	return &telemetry.TelemetryField{}
-}
-
-func foo(model *Model, fields []*telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
-	if len(model.GetNested()) == 0 {
-		fmt.Println("non-nested: ", model.Name)
-		switch model.IsList {
-		case false:
-			telemetryData := GetValueByName(fields, model.Name)
-			i := telemetryData.GetValueByType()
-			fullPath := append(prefix, telemetryData.Name)
-			switch i.(type) {
-			case *telemetry.TelemetryField_BytesValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetBytesValue()
-			case *telemetry.TelemetryField_StringValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetStringValue()
-			case *telemetry.TelemetryField_BoolValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetBoolValue()
-			case *telemetry.TelemetryField_Uint32Value:
-				m[strings.Join(fullPath,".")] = int64(telemetryData.GetUint32Value())
-			case *telemetry.TelemetryField_Uint64Value:
-				m[strings.Join(fullPath,".")] = telemetryData.GetUint64Value()
-			case *telemetry.TelemetryField_Sint32Value:
-				m[strings.Join(fullPath,".")] = telemetryData.GetSint32Value()
-			case *telemetry.TelemetryField_Sint64Value:
-				m[strings.Join(fullPath,".")] = telemetryData.GetSint64Value()
-			case *telemetry.TelemetryField_DoubleValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetDoubleValue()
-			case *telemetry.TelemetryField_FloatValue:
-				m[strings.Join(fullPath,".")] = telemetryData.GetFloatValue()
-			}
-		case true:
-			{}
-		}
-
-	} else {
-		fmt.Println("with-nested: ", model.Name)
-		prefix = append(prefix, model.Name)
-		fields = getFieldsContent(fields, model.GetName())
-		// for _, field := range fields {
-		// 	fmt.Println("field:", field.GetName())
-		// }
-		for _, item := range model.GetNested() {
-			foo(item, fields, m, prefix)
-	}
-	}
-}
-
-func bar(telemetryData *telemetry.Telemetry, model *Model) {
-	m := make(map[string]interface{})
-	prefix := []string{}
-	foo(model.GetNested()[0], telemetryData.GetDataGpbkv(), m, prefix)
-	printMap(m)
-}
-
 func contains(sli []*Model, elem *Model) bool {
     for _, item := range sli {
         if elem.Name == item.Name {
@@ -428,6 +344,19 @@ func contains(sli []*Model, elem *Model) bool {
         }
     }
     return false
+}
+
+type TFContent struct {
+	Content *telemetry.Telemetry
+	Contents []*telemetry.TelemetryField
+}
+
+func GetContent(model *Model, tf *telemetry.TelemetryField) TFContent {
+
+}
+
+func foo(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
+
 }
 
 func destructureTelemetry(telemetry *telemetry.Telemetry, model *Model) {
