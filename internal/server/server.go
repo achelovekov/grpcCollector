@@ -424,19 +424,43 @@ func FindKeys(model *Model) Keys {
 	return Keys{Leafs: leafs, Nesteds: nesteds, WLists: wLists}
 }
 
-func UpdateMap(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
-	tFContent := GetContent(model, tf)
-
-
-
+func UpdateMap(model *Model, tFContent *TFContent, m map[string]interface{}, prefix []string) {
+	fullPath := append(prefix, model.GetName())
+	i := tFContent.Content.GetValueByType()
+	switch i.(type) {
+	case *telemetry.TelemetryField_BytesValue:
+		m[strings.Join(fullPath,".")] = tFContent.Content.GetBytesValue()
+	case *telemetry.TelemetryField_StringValue:
+		m[strings.Join(fullPath,".")] = tFContent.Content.GetStringValue()
+	case *telemetry.TelemetryField_BoolValue:
+		m[strings.Join(fullPath,".")] = tFContent.Content.GetBoolValue()
+	case *telemetry.TelemetryField_Uint32Value:
+		m[strings.Join(fullPath,".")] = int64(tFContent.Content.GetUint32Value())
+	case *telemetry.TelemetryField_Uint64Value:
+		m[strings.Join(fullPath,".")] = tFContent.Content.GetUint64Value()
+	case *telemetry.TelemetryField_Sint32Value:
+		m[strings.Join(fullPath,".")] = tFContent.Content.GetSint32Value()
+	case *telemetry.TelemetryField_Sint64Value:
+		m[strings.Join(fullPath,".")] = tFContent.Content.GetSint64Value()
+	case *telemetry.TelemetryField_DoubleValue:
+		m[strings.Join(fullPath,".")] = tFContent.Content.GetDoubleValue()
+	case *telemetry.TelemetryField_FloatValue:
+		m[strings.Join(fullPath,".")] = tFContent.Content.GetFloatValue()
+	}
 }
 
-func foo(model *Model, tf *telemetry.TelemetryField) {
-	//tFContent := GetContent(model, tf)
+func foo(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
+	tFContent := GetContent(model, tf)
 
 	keys := FindKeys(model)
 
-	fmt.Println(keys)
+	for _, leaf := range keys.Leafs {
+		UpdateMap(leaf, tFContent, m, prefix)
+	}
+
+	for _, nested := range keys.Nesteds {
+		m :=
+	}
 
 }
 
