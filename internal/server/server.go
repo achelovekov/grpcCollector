@@ -346,16 +346,7 @@ func contains(sli []*Model, elem *Model) bool {
     return false
 }
 
-type TFContent struct {
-	Content *telemetry.TelemetryField
-	Contents []*telemetry.TelemetryField
-}
-
-func GetContent(model *Model, tf *telemetry.TelemetryField) *TFContent {
-	var content *telemetry.TelemetryField
-	var contents []*telemetry.TelemetryField
-
-	result := []*telemetry.TelemetryField{}
+func GetContent(model *Model, tf *telemetry.TelemetryField) *telemetry.TelemetryField {
 	modelName := model.GetName()
 
 	if len(tf.GetName()) == 0  && len(tf.GetFields()) > 0 {
@@ -363,7 +354,7 @@ func GetContent(model *Model, tf *telemetry.TelemetryField) *TFContent {
 			if name := tf.GetName(); name == "keys" || name == "content" {
 				for _, tf := range tf.GetFields() {
 					if tf.GetName() == modelName {
-						result = append(result, tf)
+						return tf
 					}
 				}
 			}
@@ -372,22 +363,25 @@ func GetContent(model *Model, tf *telemetry.TelemetryField) *TFContent {
 	if len(tf.GetName()) > 0 && len(tf.GetFields()) > 0 {
 		for _, tf := range tf.GetFields() {
 			if tf.GetName() == modelName {
-				result = append(result, tf)
+				return tf
 			}
 		}
 	}
 
-	if len(result) == 1 {
-		content = result[0]
+	return &telemetry.TelemetryField{}
+}
+
+func GetContentList(model *Model, tf *telemetry.TelemetryField) []*telemetry.TelemetryField  {
+	result := []*telemetry.TelemetryField{}
+	for _, tfField := range tf.GetFields() {
+		if tfField.GetName() == model.GetName() {
+			newTf := telemetry.TelemetryField{}
+			newTf.Name = tf.GetName()
+			newTf.Fields = append(newTf.Fields, tfField)
+			result = append(result, &newTf)
+		}
 	}
-
-	if len(result) > 1 {
-		contents = result
-	}
-
-	tFContent := TFContent{Content: content, Contents: contents}
-
-	return &tFContent
+	return result
 }
 
 type Keys struct {
@@ -409,11 +403,11 @@ func FindKeys(model *Model) Keys {
 
 	if len(nested) > 0 {
 		for _, model := range nested {
-			if len(model.GetNested()) > 0 {
-				nesteds = append(nesteds, model)
-			}
 			if len(model.GetNested()) == 0 && !model.IsList {
 				leafs = append(leafs, model)
+			}
+			if len(model.GetNested()) > 0 && !model.IsList{
+				nesteds = append(nesteds, model)
 			}
 			if model.IsList {
 				wLists = append(wLists, model)
@@ -424,49 +418,98 @@ func FindKeys(model *Model) Keys {
 	return Keys{Leafs: leafs, Nesteds: nesteds, WLists: wLists}
 }
 
-func UpdateMap(model *Model, tFContent *TFContent, m map[string]interface{}, prefix []string) {
+func CopyMap(ma map[string]interface{}) map[string]interface{} {
+	newMap := make(map[string]interface{})
+	for k, v := range ma {
+		newMap[k] = v
+	}
+	return newMap
+}
+
+func UpdateMap(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
+
+	tf = GetContent(model, tf)
+
 	fullPath := append(prefix, model.GetName())
-	i := tFContent.Content.GetValueByType()
+	i := tf.GetValueByType()
 	switch i.(type) {
 	case *telemetry.TelemetryField_BytesValue:
-		m[strings.Join(fullPath,".")] = tFContent.Content.GetBytesValue()
+		m[strings.Join(fullPath,".")] = tf.GetBytesValue()
 	case *telemetry.TelemetryField_StringValue:
-		m[strings.Join(fullPath,".")] = tFContent.Content.GetStringValue()
+		m[strings.Join(fullPath,".")] = tf.GetStringValue()
 	case *telemetry.TelemetryField_BoolValue:
-		m[strings.Join(fullPath,".")] = tFContent.Content.GetBoolValue()
+		m[strings.Join(fullPath,".")] = tf.GetBoolValue()
 	case *telemetry.TelemetryField_Uint32Value:
-		m[strings.Join(fullPath,".")] = int64(tFContent.Content.GetUint32Value())
+		m[strings.Join(fullPath,".")] = int64(tf.GetUint32Value())
 	case *telemetry.TelemetryField_Uint64Value:
-		m[strings.Join(fullPath,".")] = tFContent.Content.GetUint64Value()
+		m[strings.Join(fullPath,".")] = tf.GetUint64Value()
 	case *telemetry.TelemetryField_Sint32Value:
-		m[strings.Join(fullPath,".")] = tFContent.Content.GetSint32Value()
+		m[strings.Join(fullPath,".")] = tf.GetSint32Value()
 	case *telemetry.TelemetryField_Sint64Value:
-		m[strings.Join(fullPath,".")] = tFContent.Content.GetSint64Value()
+		m[strings.Join(fullPath,".")] = tf.GetSint64Value()
 	case *telemetry.TelemetryField_DoubleValue:
-		m[strings.Join(fullPath,".")] = tFContent.Content.GetDoubleValue()
+		m[strings.Join(fullPath,".")] = tf.GetDoubleValue()
 	case *telemetry.TelemetryField_FloatValue:
-		m[strings.Join(fullPath,".")] = tFContent.Content.GetFloatValue()
+		m[strings.Join(fullPath,".")] = tf.GetFloatValue()
 	}
 }
 
 func foo(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
-	tFContent := GetContent(model, tf)
+	tf = GetContent(model, tf)
+
+	fmt.Println("1: ", tf)
 
 	keys := FindKeys(model)
 
+	fmt.Println("2: ", keys)
+
 	for _, leaf := range keys.Leafs {
-		UpdateMap(leaf, tFContent, m, prefix)
+		fmt.Println("3: ", leaf)
+		UpdateMap(leaf, tf, m, prefix)
 	}
 
-	for _, nested := range keys.Nesteds {
-		m :=
+	if len(keys.Nesteds) > 0 {
+		prefix := append(prefix, model.GetName())
+		for _, nested := range keys.Nesteds {
+			fmt.Println("4: ", nested)
+			m := CopyMap(m)
+
+			var newPrefix []string
+
+    		newPrefix = append(newPrefix, prefix...)
+			newPrefix = append(newPrefix, nested.GetName())
+
+			foo(nested, tf, m, newPrefix)
+		}
+	}
+
+	if len(keys.WLists) > 0 {
+		for _, wList := range keys.WLists {
+			// fmt.Println("Content list for key: ", wList.GetName())
+			// fmt.Println(GetContentList(wList, tf))
+			for _, content := range GetContentList(wList, tf) {
+				m := CopyMap(m)
+				var newPrefix []string
+				newPrefix = append(newPrefix, prefix...)
+				foo(wList, content, m, newPrefix)
+			}
+		}
+	}
+
+	if len(keys.Nesteds) == 0 && len(keys.WLists) == 0 {
+		//fmt.Println("6: ", m)
+		fmt.Println("-------")
+		printMap(m)
+		fmt.Println("-------")
 	}
 
 }
 
 func bar(model *Model, td *telemetry.Telemetry) {
+	m := make(map[string]interface{})
+	prefix := []string{}
 	for _, tf := range td.GetDataGpbkv() {
-		foo(model, tf)
+		foo(model, tf, m, prefix)
 	}
 }
 
