@@ -140,6 +140,20 @@ func (model *Model) GetName() string {
 	return ""
 }
 
+func (model *Model) GetIsTag() bool {
+	if model != nil {
+		return model.IsTag
+	}
+	return false
+}
+
+func (model *Model) GetIsField() bool {
+	if model != nil {
+		return model.IsField
+	}
+	return false
+}
+
 func (model *Model) GetNested() []*Model {
 	if model != nil {
 		return model.Nested
@@ -258,7 +272,7 @@ func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, buf *[]li
 	//NEW ENTRY!!!
 }
 
-func printMap(m map[string]interface{}) {
+func PrintMap(m map[string]Leaf) {
 	for k, v := range m {
         fmt.Println(k, ":", v)
     }
@@ -419,43 +433,51 @@ func FindKeys(model *Model) Keys {
 	return Keys{Leafs: leafs, Nesteds: nesteds, WLists: wLists}
 }
 
-func CopyMap(ma map[string]interface{}) map[string]interface{} {
-	newMap := make(map[string]interface{})
+func CopyMap(ma map[string]Leaf) map[string]Leaf {
+	newMap := make(map[string]Leaf)
 	for k, v := range ma {
 		newMap[k] = v
 	}
 	return newMap
 }
 
-func UpdateMap(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
+type Leaf struct {
+	Value interface{}
+	IsTag bool
+	IsField bool
+}
+
+func UpdateMap(model *Model, tf *telemetry.TelemetryField, m map[string]Leaf, prefix []string) {
 
 	tf = GetContent(model, tf)
+	isTag := model.GetIsTag()
+	isField := model.GetIsField()
 
 	fullPath := append(prefix, model.GetName())
 	i := tf.GetValueByType()
 	switch i.(type) {
 	case *telemetry.TelemetryField_BytesValue:
-		m[strings.Join(fullPath,".")] = tf.GetBytesValue()
+		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetBytesValue(), IsTag: isTag, IsField: isField}
 	case *telemetry.TelemetryField_StringValue:
-		m[strings.Join(fullPath,".")] = tf.GetStringValue()
+		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetStringValue(), IsTag: isTag, IsField: isField}
 	case *telemetry.TelemetryField_BoolValue:
-		m[strings.Join(fullPath,".")] = tf.GetBoolValue()
+		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetBoolValue(), IsTag: isTag, IsField: isField}
 	case *telemetry.TelemetryField_Uint32Value:
-		m[strings.Join(fullPath,".")] = int64(tf.GetUint32Value())
+		m[strings.Join(fullPath,".")] = Leaf{Value: int64(tf.GetUint32Value()), IsTag: isTag, IsField: isField}
 	case *telemetry.TelemetryField_Uint64Value:
-		m[strings.Join(fullPath,".")] = tf.GetUint64Value()
+		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetUint64Value(), IsTag: isTag, IsField: isField}
 	case *telemetry.TelemetryField_Sint32Value:
-		m[strings.Join(fullPath,".")] = tf.GetSint32Value()
+		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetSint32Value(), IsTag: isTag, IsField: isField}
 	case *telemetry.TelemetryField_Sint64Value:
-		m[strings.Join(fullPath,".")] = tf.GetSint64Value()
+		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetSint64Value(), IsTag: isTag, IsField: isField}
 	case *telemetry.TelemetryField_DoubleValue:
-		m[strings.Join(fullPath,".")] = tf.GetDoubleValue()
+		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetDoubleValue(), IsTag: isTag, IsField: isField}
 	case *telemetry.TelemetryField_FloatValue:
-		m[strings.Join(fullPath,".")] = tf.GetFloatValue()
+		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetFloatValue(), IsTag: isTag, IsField: isField}
 	}
 }
 
-func foo(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, prefix []string) {
+func foo(model *Model, tf *telemetry.TelemetryField, m map[string]Leaf, prefix []string) {
 	tf = GetContent(model, tf)
 
 	//fmt.Println("1: ", tf)
@@ -503,14 +525,14 @@ func foo(model *Model, tf *telemetry.TelemetryField, m map[string]interface{}, p
 	if len(keys.Nesteds) == 0 && len(keys.WLists) == 0 {
 		//fmt.Println("6: ", m)
 		fmt.Println("-------")
-		printMap(m)
+		PrintMap(m)
 		fmt.Println("-------")
 	}
 
 }
 
 func bar(model *Model, td *telemetry.Telemetry) {
-	m := make(map[string]interface{})
+	m := make(map[string]Leaf)
 	prefix := []string{}
 	for _, tf := range td.GetDataGpbkv() {
 		foo(model, tf, m, prefix)
