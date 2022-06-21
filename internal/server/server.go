@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"time"
 	"sort"
+	"strconv"
 	//"reflect"
 
 	//dialout "github.com/CiscoSE/grpc/proto/mdt_dialout"
@@ -20,7 +21,6 @@ import (
 	telemetry "github.com/achelovekov/grpcCollector/proto/telemetry"
 	"github.com/influxdata/influxdb-client-go/v2"
 	"github.com/influxdata/influxdb-client-go/v2/api"
-	"github.com/influxdata/line-protocol/v2/lineprotocol"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 	"google.golang.org/protobuf/proto"
@@ -31,38 +31,12 @@ type DialOutServer struct {
 	ctx    context.Context
 }
 
-type Filter struct {
-	Tags []*Model
-	Fields []*Model
-}
-
-func FiltersGenerate(models []string) []Filter {
-
-	f := []Filter{}
-
-	for _, model := range models {
-		model := ParseModel(model)
-		filter := GenerateFilterFromModel(&model)
-		f = append(f, filter)
-	}
-
-	return f
-}
-
-func Sender(buf *[]lineprotocol.Encoder, writeAPI api.WriteAPI) {
-	for {
-		timer := time.NewTimer(2 * time.Second)
-		<-timer.C
-		fmt.Println("passed 2 seconds")
-		if len(*buf) > 0 {
-			for _, item := range *buf {
-				writeAPI.WriteRecord(string(item.Bytes()))
-				// fmt.Printf("%s", item.Bytes())
-				// fmt.Println()
-			}
-		}
-		*buf = nil
-	}
+type MetricContext struct {
+	Client influxdb2.Client
+	Measurement string
+	Models []string
+	BucketName string
+	OrgName string
 }
 
 func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServer) error {
@@ -73,20 +47,18 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 	}
 
 
-	models := []string{}
-	models = append(models, "bgp-model-afi.json")
-	models = append(models, "bgp-model-neighbors.json")
-
-	filters := FiltersGenerate(models)
-	buf := []lineprotocol.Encoder{}
-
-	// Create a new client using an InfluxDB server base URL and an authentication token
-	client := influxdb2.NewClient("http://10.0.17.11:8086", "Ubm4lS0Smd8aGYVI5LlwwAJJVX6BbKDdS4GLU1nVwyR2Ku2_JMsEs4hW8mwmy-TH2L3a8vhVgashOZk5azkqsw==")
-	// Use blocking write client for writes to desired bucket
-	writeAPI := client.WriteAPI("Neto", "grpcBucket")
+	client := influxdb2.NewClient(
+		"http://10.0.17.11:8086",
+		"Qh7S7jcZL-Y1DkK524RHDUPjkJdW-a_85sGbSPnKSzIXg9R8OAGb92XFLfgbxLEgqbA5zbvOQFBD3sJX3Xis2g==")
 
 
-	go Sender(&buf, writeAPI)
+	metricContext := MetricContext{
+		Client: client,
+		Measurement: "bgp",
+		Models: []string{"bgp-model-afi.json"},
+		BucketName: "grpc",
+		OrgName: "Neto",
+	}
 
 	for {
 		packet, err := stream.Recv()
@@ -102,7 +74,7 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 			break
 		}
 
-		c.handleTelemetry(packet.Data, filters, &buf)
+		c.handleTelemetry(client, metricContext, packet.Data)
 	}
 
 	if peerOK {
@@ -171,75 +143,22 @@ func (model *Model) CheckNestedByName(s string) bool {
 }
 
 func ParseModel(filename string) Model {
-	// Open jsonFile
 	jsonFile, err := os.Open(filename)
-	// if we os.Open returns an error then handle it
 	if err != nil {
 		fmt.Println(err)
 		return Model{}
 	}
-	fmt.Println("Successfully Opened:", filename)
-	// defer the closing of our jsonFile so that we can parse it later on
 	defer jsonFile.Close()
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
 	var model Model
 
-	// we unmarshal our byteArray which contains our
-	// jsonFile's content into 'users' which we defined above
 	json.Unmarshal(byteValue, &model)
 
 	return model
 }
 
-func GenerateFilterFromModel(model *Model) (Filter) {
-	tags := []*Model{}
-	fields := []*Model{}
-
-	prefix := []string{}
-
-	for _, item := range model.Nested {
-		FilterFlatten(item, &tags, &fields, prefix)
-	}
-
-	sort.SliceStable(tags, func(i, j int) bool {
-		return tags[i].Name < tags[j].Name
-	  })
-
-	sort.SliceStable(fields, func(i, j int) bool {
-		return fields[i].Name < fields[j].Name
-	  })
-
-	var filter Filter
-	filter.Tags = tags
-	filter.Fields = fields
-
-	return filter
-}
-
-func FilterFlatten(model *Model, tags *[]*Model, fields *[]*Model, prefix []string) {
-	if len(model.Nested) > 0 {
-		prefix = append(prefix, model.Name)
-		for _, item := range model.Nested {
-			FilterFlatten(item, tags, fields, prefix)
-		}
-	} else {
-		prefix = append(prefix, model.Name)
-		name := strings.Join(prefix,".")
-		newModel := new(Model)
-		newModel.Name = name
-		if model.IsTag {
-			newModel.IsTag = model.IsTag
-			*tags = append(*tags, newModel)
-		}
-		if model.IsField {
-			newModel.IsField = model.IsField
-			*fields = append(*fields, newModel)
-		}
-	}
-}
-
-func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, buf *[]lineprotocol.Encoder) {
+func (c *DialOutServer) handleTelemetry(client influxdb2.Client, metricContext MetricContext, data []byte) {
 
 	telemetryData := &telemetry.Telemetry{}
 	err := proto.Unmarshal(data, telemetryData)
@@ -248,117 +167,12 @@ func (c *DialOutServer) handleTelemetry(data []byte, filters []Filter, buf *[]li
 		return
 	}
 
-	// model := Model{Name: telemetryData.EncodingPath}
+	writeAPI := client.WriteAPI(metricContext.OrgName, metricContext.BucketName)
 
-	// destructureTelemetry(telemetryData, &model)
-
-	model := ParseModel("bgp-model-afi.json")
-
-	bar(&model, telemetryData)
-
-	//PrintModel(&model,  0)
-	// b, err := json.MarshalIndent(model, "", "  ")
-    // if err != nil {
-    //     fmt.Println(err)
-    // }
-    // fmt.Print(string(b))
-	// b, err = json.Marshal(telemetryData)
-
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// fmt.Println(string(b))
-	//NEW ENTRY!!!
-}
-
-func PrintMap(m map[string]Leaf) {
-	for k, v := range m {
-        fmt.Println(k, ":", v)
-    }
-}
-
-// func flatten(telemetryData *telemetry.TelemetryField, prefix []string, m map[string]interface{}) {
-// 	if len(telemetryData.Fields) > 0 {
-// 		if (len(telemetryData.Name) > 0 && telemetryData.Name != "keys" && telemetryData.Name != "content") {
-// 			prefix = append(prefix, telemetryData.Name)
-// 		}
-
-// 		for _, item := range telemetryData.Fields {
-// 			flatten(item, prefix, m)
-// 		}
-// 	} else {
-// 		if (len(telemetryData.Name) > 0 && telemetryData.Name != "keys" && telemetryData.Name != "content") {
-// 			fullPath := append(prefix, telemetryData.Name)
-// 			i := telemetryData.GetValueByType()
-// 			switch i.(type) {
-// 			case *telemetry.TelemetryField_BytesValue:
-// 				m[strings.Join(fullPath,".")] = telemetryData.GetBytesValue()
-// 			case *telemetry.TelemetryField_StringValue:
-// 				m[strings.Join(fullPath,".")] = telemetryData.GetStringValue()
-// 			case *telemetry.TelemetryField_BoolValue:
-// 				m[strings.Join(fullPath,".")] = telemetryData.GetBoolValue()
-// 			case *telemetry.TelemetryField_Uint32Value:
-// 				m[strings.Join(fullPath,".")] = int64(telemetryData.GetUint32Value())
-// 			case *telemetry.TelemetryField_Uint64Value:
-// 				m[strings.Join(fullPath,".")] = telemetryData.GetUint64Value()
-// 			case *telemetry.TelemetryField_Sint32Value:
-// 				m[strings.Join(fullPath,".")] = telemetryData.GetSint32Value()
-// 			case *telemetry.TelemetryField_Sint64Value:
-// 				m[strings.Join(fullPath,".")] = telemetryData.GetSint64Value()
-// 			case *telemetry.TelemetryField_DoubleValue:
-// 				m[strings.Join(fullPath,".")] = telemetryData.GetDoubleValue()
-// 			case *telemetry.TelemetryField_FloatValue:
-// 				m[strings.Join(fullPath,".")] = telemetryData.GetFloatValue()
-// 			}
-// 		}
-// 	}
-// }
-
-
-func containsString(s []string, v string) bool {
-	for _, item := range s {
-        if item == v {
-            return true
-        }
-    }
-    return false
-}
-
-func PrepareLine(measurement string, m map[string]interface{}, filter Filter, enc lineprotocol.Encoder) lineprotocol.Encoder {
-	enc.SetPrecision(lineprotocol.Microsecond)
-	enc.StartLine(measurement)
-	for _, item := range filter.Tags {
-		val, ok := m[item.Name]
-		if ok {
-			enc.AddTag(item.Name, val.(string))
-		}
+	for _, model := range metricContext.Models {
+		model := ParseModel(model)
+		bar(metricContext.Measurement, writeAPI, &model, telemetryData)
 	}
-
-	for _, item := range filter.Fields {
-		val, ok := m[item.Name]
-		if ok {
-			enc.AddField(item.Name, lineprotocol.MustNewValue(val))
-		}
-	}
-
-	fmt.Println(len(enc.Bytes()))
-	//enc.EndLine(time.Time{})
-	if err := enc.Err(); err != nil {
-		panic(fmt.Errorf("encoding error: %v", err))
-	}
-	//fmt.Printf("--------->%s", enc.Bytes())
-
-	return enc
-}
-
-func contains(sli []*Model, elem *Model) bool {
-    for _, item := range sli {
-        if elem.Name == item.Name {
-            return true
-        }
-    }
-    return false
 }
 
 func GetContent(model *Model, tf *telemetry.TelemetryField) (*telemetry.TelemetryField, error) {
@@ -433,14 +247,6 @@ func FindKeys(model *Model) Keys {
 	return Keys{Leafs: leafs, Nesteds: nesteds, WLists: wLists}
 }
 
-func CopyMap(ma map[string]Leaf) map[string]Leaf {
-	newMap := make(map[string]Leaf)
-	for k, v := range ma {
-		newMap[k] = v
-	}
-	return newMap
-}
-
 type Leaf struct {
 	Value interface{}
 	Model
@@ -452,7 +258,6 @@ func (leaf *Leaf) String() string {
 
 func CopySlice(s *[]*Leaf) *[]*Leaf {
     d := make([]*Leaf, len(*s))
-
     copy(d, *s)
 
 	return &d
@@ -465,15 +270,48 @@ func PrintSlice(s *[]*Leaf) {
 }
 
 func ProcessSlice(sli *[]*Leaf) ([]*Leaf, []*Leaf) {
-	tags := []Leaf{}
-	fields := []Leaf{}
+	tags := []*Leaf{}
+	fields := []*Leaf{}
 
+	for _, item := range *sli {
+		if item.IsTag {
+			tags = append(tags, item)
+		}
+		if item.IsField {
+			fields = append(fields, item)
+		}
+	}
 
+	sort.SliceStable(tags, func(i, j int) bool {
+		return tags[i].Name < tags[j].Name
+	  })
 
+	sort.SliceStable(fields, func(i, j int) bool {
+		return fields[i].Name < fields[j].Name
+	  })
+
+	return tags, fields
 }
 
-func PushSlice(sli *[]*Leaf) {
-	pass
+func PushSlice(measurement string, writeAPI api.WriteAPI, sli *[]*Leaf) {
+	tags, fields := ProcessSlice(sli)
+
+	point := influxdb2.NewPointWithMeasurement(measurement)
+	for _, tag := range tags {
+		switch tag.Value.(type) {
+		case string:
+			point.AddTag(tag.GetName(), tag.Value.(string))
+		case int64:
+			value := tag.Value.(int64)
+			point.AddTag(tag.GetName(), strconv.FormatInt(value, 10))
+		}
+	}
+	for _, field := range fields {
+		point.AddField(field.GetName(), field.Value)
+	}
+	point.SetTime(time.Now())
+	writeAPI.WritePoint(point)
+	writeAPI.Flush()
 }
 
 func UpdateSli(model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix []string) {
@@ -515,7 +353,7 @@ func UpdateSli(model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix 
 	*sli = append(*sli, &newLeaf)
 }
 
-func foo(model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix []string) {
+func foo(measurement string, writeAPI api.WriteAPI, model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix []string) {
 	tf, err := GetContent(model, tf)
 
 	if err != nil {
@@ -523,21 +361,15 @@ func foo(model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix []stri
 		return
 	}
 
-	//fmt.Println("1: ", tf)
-
 	keys := FindKeys(model)
 
-	//fmt.Println("2: ", keys)
-
 	for _, leaf := range keys.Leafs {
-		//fmt.Println("3: ", leaf)
 		UpdateSli(leaf, tf, sli, prefix)
 	}
 
 	if len(keys.Nesteds) > 0 {
 		prefix := append(prefix, model.GetName())
 		for _, nested := range keys.Nesteds {
-			//fmt.Println("4: ", nested)
 			newSli := CopySlice(sli)
 
 			var newPrefix []string
@@ -545,14 +377,12 @@ func foo(model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix []stri
     		newPrefix = append(newPrefix, prefix...)
 			newPrefix = append(newPrefix, nested.GetName())
 
-			foo(nested, tf, newSli, newPrefix)
+			foo(measurement, writeAPI, nested, tf, newSli, newPrefix)
 		}
 	}
 
 	if len(keys.WLists) > 0 {
 		for _, wList := range keys.WLists {
-			// fmt.Println("Content list for key: ", wList.GetName())
-			// fmt.Println(GetContentList(wList, tf))
 			for _, content := range GetContentList(wList, tf) {
 				newSli := CopySlice(sli)
 				var newPrefix []string
@@ -560,26 +390,22 @@ func foo(model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix []stri
 				if len(wList.GetNested()) > 0 {
 					newPrefix = append(newPrefix, wList.GetName())
 				}
-				foo(wList, content, newSli, newPrefix)
+				foo(measurement, writeAPI, wList, content, newSli, newPrefix)
 			}
 		}
 	}
 
 	if len(keys.Nesteds) == 0 && len(keys.WLists) == 0 {
-		//fmt.Println("6: ", m)
-		fmt.Println("-------")
-		//PrintSlice(sli)
-		PushMetric(sli)
-		fmt.Println("-------")
+		PushSlice(measurement, writeAPI, sli)
 	}
 
 }
 
-func bar(model *Model, td *telemetry.Telemetry) {
+func bar(measurement string, writeAPI api.WriteAPI, model *Model, td *telemetry.Telemetry) {
 	sli := []*Leaf{}
 	prefix := []string{}
 	for _, tf := range td.GetDataGpbkv() {
-		foo(model, tf, &sli, prefix)
+		foo(measurement, writeAPI, model, tf, &sli, prefix)
 	}
 }
 
