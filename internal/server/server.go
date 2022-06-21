@@ -361,7 +361,7 @@ func contains(sli []*Model, elem *Model) bool {
     return false
 }
 
-func GetContent(model *Model, tf *telemetry.TelemetryField) *telemetry.TelemetryField {
+func GetContent(model *Model, tf *telemetry.TelemetryField) (*telemetry.TelemetryField, error) {
 	modelName := model.GetName()
 
 	if len(tf.GetName()) == 0  && len(tf.GetFields()) > 0 {
@@ -369,7 +369,7 @@ func GetContent(model *Model, tf *telemetry.TelemetryField) *telemetry.Telemetry
 			if name := tf.GetName(); name == "keys" || name == "content" {
 				for _, tf := range tf.GetFields() {
 					if tf.GetName() == modelName {
-						return tf
+						return tf, nil
 					}
 				}
 			}
@@ -378,12 +378,12 @@ func GetContent(model *Model, tf *telemetry.TelemetryField) *telemetry.Telemetry
 	if len(tf.GetName()) > 0 && len(tf.GetFields()) > 0 {
 		for _, tf := range tf.GetFields() {
 			if tf.GetName() == modelName {
-				return tf
+				return tf, nil
 			}
 		}
 	}
 
-	return &telemetry.TelemetryField{}
+	return &telemetry.TelemetryField{}, fmt.Errorf("no content %v in nested of %s", model.GetName(), tf.GetName())
 }
 
 func GetContentList(model *Model, tf *telemetry.TelemetryField) []*telemetry.TelemetryField  {
@@ -443,42 +443,85 @@ func CopyMap(ma map[string]Leaf) map[string]Leaf {
 
 type Leaf struct {
 	Value interface{}
-	IsTag bool
-	IsField bool
+	Model
 }
 
-func UpdateMap(model *Model, tf *telemetry.TelemetryField, m map[string]Leaf, prefix []string) {
+func (leaf *Leaf) String() string {
+    return fmt.Sprintf("Name: %v isTag: %v isField: %v isList: %v value: %v", leaf.Name, leaf.IsTag, leaf.IsField, leaf.IsList, leaf.Value)
+}
 
-	tf = GetContent(model, tf)
-	isTag := model.GetIsTag()
-	isField := model.GetIsField()
+func CopySlice(s *[]*Leaf) *[]*Leaf {
+    d := make([]*Leaf, len(*s))
 
-	fullPath := append(prefix, model.GetName())
-	i := tf.GetValueByType()
-	switch i.(type) {
-	case *telemetry.TelemetryField_BytesValue:
-		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetBytesValue(), IsTag: isTag, IsField: isField}
-	case *telemetry.TelemetryField_StringValue:
-		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetStringValue(), IsTag: isTag, IsField: isField}
-	case *telemetry.TelemetryField_BoolValue:
-		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetBoolValue(), IsTag: isTag, IsField: isField}
-	case *telemetry.TelemetryField_Uint32Value:
-		m[strings.Join(fullPath,".")] = Leaf{Value: int64(tf.GetUint32Value()), IsTag: isTag, IsField: isField}
-	case *telemetry.TelemetryField_Uint64Value:
-		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetUint64Value(), IsTag: isTag, IsField: isField}
-	case *telemetry.TelemetryField_Sint32Value:
-		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetSint32Value(), IsTag: isTag, IsField: isField}
-	case *telemetry.TelemetryField_Sint64Value:
-		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetSint64Value(), IsTag: isTag, IsField: isField}
-	case *telemetry.TelemetryField_DoubleValue:
-		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetDoubleValue(), IsTag: isTag, IsField: isField}
-	case *telemetry.TelemetryField_FloatValue:
-		m[strings.Join(fullPath,".")] = Leaf{Value: tf.GetFloatValue(), IsTag: isTag, IsField: isField}
+    copy(d, *s)
+
+	return &d
+}
+
+func PrintSlice(s *[]*Leaf) {
+	for _, item := range *s {
+		fmt.Println(item)
 	}
 }
 
-func foo(model *Model, tf *telemetry.TelemetryField, m map[string]Leaf, prefix []string) {
-	tf = GetContent(model, tf)
+func ProcessSlice(sli *[]*Leaf) ([]*Leaf, []*Leaf) {
+	tags := []Leaf{}
+	fields := []Leaf{}
+
+
+
+}
+
+func PushSlice(sli *[]*Leaf) {
+	pass
+}
+
+func UpdateSli(model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix []string) {
+
+	tf, err := GetContent(model, tf)
+
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	fullPath := append(prefix, model.GetName())
+	newLeaf := Leaf{}
+	newLeaf.Name = strings.Join(fullPath,".")
+	newLeaf.IsTag = model.GetIsTag()
+	newLeaf.IsField = model.GetIsField()
+	i := tf.GetValueByType()
+	switch i.(type) {
+	case *telemetry.TelemetryField_BytesValue:
+		newLeaf.Value = tf.GetBytesValue()
+	case *telemetry.TelemetryField_StringValue:
+		newLeaf.Value = tf.GetStringValue()
+	case *telemetry.TelemetryField_BoolValue:
+		newLeaf.Value = tf.GetBoolValue()
+	case *telemetry.TelemetryField_Uint32Value:
+		newLeaf.Value = int64(tf.GetUint32Value())
+	case *telemetry.TelemetryField_Uint64Value:
+		newLeaf.Value = tf.GetUint64Value()
+	case *telemetry.TelemetryField_Sint32Value:
+		newLeaf.Value = tf.GetSint32Value()
+	case *telemetry.TelemetryField_Sint64Value:
+		newLeaf.Value = tf.GetSint64Value()
+	case *telemetry.TelemetryField_DoubleValue:
+		newLeaf.Value = tf.GetDoubleValue()
+	case *telemetry.TelemetryField_FloatValue:
+		newLeaf.Value = tf.GetFloatValue()
+	}
+
+	*sli = append(*sli, &newLeaf)
+}
+
+func foo(model *Model, tf *telemetry.TelemetryField, sli *[]*Leaf, prefix []string) {
+	tf, err := GetContent(model, tf)
+
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
 	//fmt.Println("1: ", tf)
 
@@ -488,21 +531,21 @@ func foo(model *Model, tf *telemetry.TelemetryField, m map[string]Leaf, prefix [
 
 	for _, leaf := range keys.Leafs {
 		//fmt.Println("3: ", leaf)
-		UpdateMap(leaf, tf, m, prefix)
+		UpdateSli(leaf, tf, sli, prefix)
 	}
 
 	if len(keys.Nesteds) > 0 {
 		prefix := append(prefix, model.GetName())
 		for _, nested := range keys.Nesteds {
 			//fmt.Println("4: ", nested)
-			m := CopyMap(m)
+			newSli := CopySlice(sli)
 
 			var newPrefix []string
 
     		newPrefix = append(newPrefix, prefix...)
 			newPrefix = append(newPrefix, nested.GetName())
 
-			foo(nested, tf, m, newPrefix)
+			foo(nested, tf, newSli, newPrefix)
 		}
 	}
 
@@ -511,13 +554,13 @@ func foo(model *Model, tf *telemetry.TelemetryField, m map[string]Leaf, prefix [
 			// fmt.Println("Content list for key: ", wList.GetName())
 			// fmt.Println(GetContentList(wList, tf))
 			for _, content := range GetContentList(wList, tf) {
-				m := CopyMap(m)
+				newSli := CopySlice(sli)
 				var newPrefix []string
 				newPrefix = append(newPrefix, prefix...)
 				if len(wList.GetNested()) > 0 {
 					newPrefix = append(newPrefix, wList.GetName())
 				}
-				foo(wList, content, m, newPrefix)
+				foo(wList, content, newSli, newPrefix)
 			}
 		}
 	}
@@ -525,17 +568,18 @@ func foo(model *Model, tf *telemetry.TelemetryField, m map[string]Leaf, prefix [
 	if len(keys.Nesteds) == 0 && len(keys.WLists) == 0 {
 		//fmt.Println("6: ", m)
 		fmt.Println("-------")
-		PrintMap(m)
+		//PrintSlice(sli)
+		PushMetric(sli)
 		fmt.Println("-------")
 	}
 
 }
 
 func bar(model *Model, td *telemetry.Telemetry) {
-	m := make(map[string]Leaf)
+	sli := []*Leaf{}
 	prefix := []string{}
 	for _, tf := range td.GetDataGpbkv() {
-		foo(model, tf, m, prefix)
+		foo(model, tf, &sli, prefix)
 	}
 }
 
