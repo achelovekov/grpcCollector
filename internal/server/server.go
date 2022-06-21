@@ -51,13 +51,24 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 		"http://10.0.17.11:8086",
 		"Qh7S7jcZL-Y1DkK524RHDUPjkJdW-a_85sGbSPnKSzIXg9R8OAGb92XFLfgbxLEgqbA5zbvOQFBD3sJX3Xis2g==")
 
+	orgName := "Neto"
+	bucketName := "grpc"
+
+	writeAPI := client.WriteAPI(orgName, bucketName)
+	errorsCh := writeAPI.Errors()
+    go func() {
+        for err := range errorsCh {
+            fmt.Printf("write error: %s\n", err.Error())
+        }
+    }()
+
 
 	metricContext := MetricContext{
 		Client: client,
 		Measurement: "bgp",
-		Models: []string{"bgp-model-afi.json"},
-		BucketName: "grpc",
-		OrgName: "Neto",
+		Models: []string{"bgp-model-afi.json", "bgp-model-neighbors.json"},
+		BucketName: bucketName,
+		OrgName: orgName,
 	}
 
 	for {
@@ -74,7 +85,7 @@ func (c *DialOutServer) MdtDialout(stream dialout.GRPCMdtDialout_MdtDialoutServe
 			break
 		}
 
-		c.handleTelemetry(client, metricContext, packet.Data)
+		c.handleTelemetry(writeAPI, metricContext, packet.Data)
 	}
 
 	if peerOK {
@@ -158,7 +169,7 @@ func ParseModel(filename string) Model {
 	return model
 }
 
-func (c *DialOutServer) handleTelemetry(client influxdb2.Client, metricContext MetricContext, data []byte) {
+func (c *DialOutServer) handleTelemetry(writeAPI api.WriteAPI, metricContext MetricContext, data []byte) {
 
 	telemetryData := &telemetry.Telemetry{}
 	err := proto.Unmarshal(data, telemetryData)
@@ -167,11 +178,9 @@ func (c *DialOutServer) handleTelemetry(client influxdb2.Client, metricContext M
 		return
 	}
 
-	writeAPI := client.WriteAPI(metricContext.OrgName, metricContext.BucketName)
-
 	for _, model := range metricContext.Models {
 		model := ParseModel(model)
-		bar(metricContext.Measurement, writeAPI, &model, telemetryData)
+		go bar(metricContext.Measurement, writeAPI, &model, telemetryData)
 	}
 }
 
@@ -357,7 +366,6 @@ func foo(measurement string, writeAPI api.WriteAPI, model *Model, tf *telemetry.
 	tf, err := GetContent(model, tf)
 
 	if err != nil {
-		log.Println(err)
 		return
 	}
 
@@ -371,13 +379,11 @@ func foo(measurement string, writeAPI api.WriteAPI, model *Model, tf *telemetry.
 		prefix := append(prefix, model.GetName())
 		for _, nested := range keys.Nesteds {
 			newSli := CopySlice(sli)
-
 			var newPrefix []string
-
     		newPrefix = append(newPrefix, prefix...)
 			newPrefix = append(newPrefix, nested.GetName())
 
-			foo(measurement, writeAPI, nested, tf, newSli, newPrefix)
+			go foo(measurement, writeAPI, nested, tf, newSli, newPrefix)
 		}
 	}
 
@@ -390,7 +396,7 @@ func foo(measurement string, writeAPI api.WriteAPI, model *Model, tf *telemetry.
 				if len(wList.GetNested()) > 0 {
 					newPrefix = append(newPrefix, wList.GetName())
 				}
-				foo(measurement, writeAPI, wList, content, newSli, newPrefix)
+				go foo(measurement, writeAPI, wList, content, newSli, newPrefix)
 			}
 		}
 	}
@@ -405,7 +411,7 @@ func bar(measurement string, writeAPI api.WriteAPI, model *Model, td *telemetry.
 	sli := []*Leaf{}
 	prefix := []string{}
 	for _, tf := range td.GetDataGpbkv() {
-		foo(measurement, writeAPI, model, tf, &sli, prefix)
+		go foo(measurement, writeAPI, model, tf, &sli, prefix)
 	}
 }
 
